@@ -1,0 +1,85 @@
+<div class="wrapper wrapper-full-page">
+    <nav class="navbar navbar-primary navbar-transparent navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <img src="/assets/img/logo_text.svg" alt="Mowize Logo" class="navbar-brand">
+            </div>
+
+        </div>
+    </nav>
+    <div class="full-page login-page" filter-color="black">
+        <!--  you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
+                        <form [formGroup]="login">
+                            <div class="card card-login card-hidden">
+                                <div class="card-header text-center" data-background-color="orange">
+                                    <h4 class="card-title">Login to Admin Panel</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">email</i>
+                                        </span>
+                                        <div class="form-group label-floating" [ngClass]="displayFieldCss(login, 'email')">
+                                            <label class="control-label" for="email">Email Address:
+                                                        <span class="star">*</span>
+                                                    </label>
+                                            <input type="text" id="email" class="form-control" formControlName="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                                            <app-field-error-display [displayError]="isFieldValid(login, 'email')" errorMsg="Email is required and format should be john@doe.com.">
+                                            </app-field-error-display>
+                                        </div>
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">lock_outline</i>
+                                        </span>
+                                        <div class="form-group label-floating" [ngClass]="displayFieldCss(login, 'password')">
+                                            <label for="" class="control-label">Password
+                                                        <span class="star">*</span>
+                                                    </label>
+                                            <input type="password" id="password" class="form-control" formControlName="password">
+                                            <app-field-error-display [displayError]="isFieldValid(login, 'password')" errorMsg="Enter a valid password.">
+                                            </app-field-error-display>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-footer text-center">
+                                    <button type="submit" class="btn btn-rose btn-simple btn-wd btn-lg" (click)="onLogin()">Login</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="container">
+                <nav class="pull-left">
+                    <ul>
+                        <li>
+                            <a href="#">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Company
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Portfolio
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <p class="copyright pull-right">
+                    P Cube Mobility Private Limited &copy; {{copyrightDate | date: 'yyyy'}}
+                </p>
+            </div>
+        </footer>
+        <div class="full-page-background" style="background-image: url(../../../assets/img/login.jpeg) "></div>
+    </div>
