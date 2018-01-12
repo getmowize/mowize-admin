@@ -31,7 +31,8 @@ export class AuthGuard implements CanActivate {
     }
 
     checkLogin(url: string): boolean {
-        if (this.authService.isLoggedIn) {
+        if (this.authService.isLoggedIn()) {
+            this.authService.updateCookieTime();
             return true;
         }
 
@@ -39,17 +40,18 @@ export class AuthGuard implements CanActivate {
         this.authService.redirectUrl = url;
 
         // Create a dummy session id
-        let sessionId = this.randomIntFromInterval(123212321, 988989009);
+        // let sessionId = this.randomIntFromInterval(123212321, 988989009);
 
         // Set our navigation extras object
         // that contains our global query params and fragment
-        let navigationExtras: NavigationExtras = {
-            queryParams: { 'session_id': sessionId },
-            fragment: 'anchor'
-        };
+        // let navigationExtras: NavigationExtras = {
+        //     queryParams: { 'session_id': sessionId },
+        //     fragment: 'anchor'
+        // };
 
         // Navigate to the login page with extras
-        this.router.navigate(['/login'], navigationExtras);
+        // this.router.navigate(['/login'], navigationExtras);
+        this.authService.logout();
         return false;
     }
 

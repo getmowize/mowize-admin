@@ -39,6 +39,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { CookieService } from 'ngx-cookie-service';
 import { AppRoutes } from './app.routing';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
@@ -113,7 +114,8 @@ export class MaterialModule { }
   providers: [
     AuthGuard,
     AuthService,
-    CanDeactivateGuard
+    CanDeactivateGuard,
+    CookieService
   ]
 })
 export class AppModule { }

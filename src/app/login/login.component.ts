@@ -37,8 +37,7 @@ export class LoginComponent implements OnInit {
             // Here we are using a required, minimum length and maximum length validator.
             password: ['', Validators.required]
         });
-        console.log(this.authService.isLoggedIn);
-        if (this.authService.isLoggedIn === true) {
+        if (this.authService.isLoggedIn()) {
             this.router.navigate(['/dashboard']);
         }
 

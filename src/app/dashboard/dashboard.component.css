@@ -1,0 +1,15 @@
+.image_size {
+    padding: 4px;
+    width: 56px;
+    height: 56px;
+}
+
+.small-image {
+    padding: 4px;
+    width: 24px;
+    height: 24px;
+}
+
+.mowize-color {
+    background: #101B4E;
+}
