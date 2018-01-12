@@ -12,8 +12,9 @@ declare const $: any;
     styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
-    // constructor(private navbarTitleService: NavbarTitleService, private notificationService: NotificationService) { }
+
     public tableData: TableData;
+
     startAnimationForLineChart(chart: any) {
         let seq: any, delays: any, durations: any;
         seq = 0;
@@ -73,32 +74,24 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     public ngOnInit() {
 
         /* ----------==========     Active Users Chart initialization For Documentation    ==========---------- */
-        const activeUsersChart: any = {
+        const activeUsersChartData: any = {
             labels: ['Active', 'Dropped', 'Inactive', 'HalfActive'],
             series: [
                 [2530, 0, 0, 236]
             ]
         };
-        const responsiveOptions: any[] = [
-            ['screen and (max-width: 640px)', {
-                seriesBarDistance: 5,
-                axisX: {
-                    labelInterpolationFnc: function (value) {
-                        return value[0];
-                    }
-                }
-            }]
-        ];
         const optionsActiveUsersChart: any = {
+            axisY: {
+                showGrid: true
+            },
             axisX: {
                 showGrid: true
             },
-            low: 0,
-            high: 3000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-            chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
+            horizontalBars: true,
+            chartPadding: { top: 10, right: 0, bottom: 0, left: 40 },
         };
 
-        var activeUsersCharts = new Chartist.Bar('#activeUsers', activeUsersChart, optionsActiveUsersChart, responsiveOptions);
+        var activeUsersCharts = new Chartist.Bar('#activeUsers', activeUsersChartData, optionsActiveUsersChart);
         this.startAnimationForLineChart(activeUsersCharts);
 
 
@@ -112,15 +105,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             ]
         };
         const optionsPlatformUsers = {
+            axisY: {
+                showGrid: true
+            },
             axisX: {
                 showGrid: true
             },
-            low: 0,
-            high: 3000,
-            chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
+            horizontalBars: true,
+            chartPadding: { top: 10, right: 0, bottom: 0, left: 30 },
         };
 
-        var platformSubscriptionChart = new Chartist.Bar('#platformWiseChart', dataPlatformUsers, optionsPlatformUsers, responsiveOptions);
+        var platformSubscriptionChart = new Chartist.Bar('#platformWiseChart', dataPlatformUsers, optionsPlatformUsers);
         this.startAnimationForBarChart(platformSubscriptionChart);
     }
     ngAfterViewInit() {

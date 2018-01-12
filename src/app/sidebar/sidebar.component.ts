@@ -31,7 +31,7 @@ export const ROUTES: RouteInfo[] = [
         icontype: 'dashboard'
     },
     {
-        path: '#',
+        path: '/users',
         title: 'Users',
         type: 'link',
         icontype: 'person'
@@ -80,7 +80,18 @@ export const ROUTES: RouteInfo[] = [
         title: 'FinFacts',
         type: 'link',
         icontype: 'information'
-    },
+    }, {
+        path: '/tables',
+        title: 'Tables',
+        type: 'sub',
+        icontype: 'grid_on',
+        collapse: 'tables',
+        children: [
+            { path: 'regular', title: 'Regular Tables', ab: 'RT' },
+            { path: 'extended', title: 'Extended Tables', ab: 'ET' },
+            { path: 'datatables.net', title: 'Datatables.net', ab: 'DT' }
+        ]
+    }
 ];
 
 //Menu Items
@@ -180,8 +191,7 @@ export class SidebarComponent implements OnInit {
     public menuItems: any[];
 
     constructor(private auth: AuthService) {
-        console.log('Injecting authService');
-        console.log(auth);
+
     }
 
     ngOnInit() {

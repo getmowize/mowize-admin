@@ -39,6 +39,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { PageNotFoundComponent } from './pagenotfound/pagenotfound.component';
 import { CookieService } from 'ngx-cookie-service';
 import { AppRoutes } from './app.routing';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
@@ -108,7 +109,8 @@ export class MaterialModule { }
     LoginComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
-    FieldErrorDisplayComponent
+    FieldErrorDisplayComponent,
+    PageNotFoundComponent
   ],
   bootstrap: [AppComponent],
   providers: [

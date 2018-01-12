@@ -3,29 +3,12 @@
         <nav class="pull-left">
             <ul>
                 <li>
-                    <a href="#">
-                        Home
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        Company
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        Portfolio
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        Blog
-                    </a>
+                    <button class="btn btn-rose btn-simple" (click)="goToMowize()">Home</button>
                 </li>
             </ul>
         </nav>
         <p class="copyright pull-right">
-            P Cube Mobility Private Limited &copy; {{test | date: 'yyyy'}}
+            P Cube Mobility Private Limited Copyright &copy; {{copyrightDate | date: 'yyyy'}}. All Rights Reserved
         </p>
     </div>
 </footer>

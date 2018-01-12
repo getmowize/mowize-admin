@@ -7,25 +7,26 @@ import { WizardComponent } from './wizard/wizard.component';
 
 export const FormsRoutes: Routes = [
     {
-      path: '',
-      children: [ {
-        path: 'regular',
-        component: RegularFormsComponent
-    }]}, {
-    path: '',
-    children: [ {
-      path: 'extended',
-      component: ExtendedFormsComponent
-    }]
-    }, {
-    path: '',
-    children: [ {
-      path: 'validation',
-      component: ValidationFormsComponent
-    }]
+        path: '',
+        children: [{
+            path: 'regular',
+            component: RegularFormsComponent
+        }]
     }, {
         path: '',
-        children: [ {
+        children: [{
+            path: 'extended',
+            component: ExtendedFormsComponent
+        }]
+    }, {
+        path: '',
+        children: [{
+            path: 'validation',
+            component: ValidationFormsComponent
+        }]
+    }, {
+        path: '',
+        children: [{
             path: 'wizard',
             component: WizardComponent
         }]

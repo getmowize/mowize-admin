@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
 })
 
 export class FooterComponent {
-    test: Date = new Date();
+    copyrightDate: Date = new Date();
+    goToMowize(): void {
+        window.open('https://www.mowize.com');
+    }
 }

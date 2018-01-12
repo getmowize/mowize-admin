@@ -25,15 +25,11 @@ export class AuthService {
     }
 
     logout(): void {
-        console.log('Logging Out');
         this.cookieService.delete(this.loginCookie);
         this.router.navigate(['/login']);
     }
 
     isLoggedIn(): boolean {
-        console.log('Getting all cookies');
-        console.log(this.cookieService.getAll());
-        console.log(this.cookieService.check(this.loginCookie));
         return this.cookieService.check(this.loginCookie);
     }
 

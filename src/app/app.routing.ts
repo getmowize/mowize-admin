@@ -4,6 +4,8 @@ import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './services/authguard.service';
+import { PageNotFoundComponent } from './pagenotfound/pagenotfound.component';
+import { UsersModule } from 'app/users/users.module';
 
 export const AppRoutes: Routes = [
     {
@@ -12,7 +14,7 @@ export const AppRoutes: Routes = [
     },
     {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'login',
         pathMatch: 'full',
     }, {
         path: '',
@@ -22,6 +24,10 @@ export const AppRoutes: Routes = [
                 path: '',
                 canActivate: [AuthGuard],
                 loadChildren: './dashboard/dashboard.module#DashboardModule'
+            }, {
+                path: 'users',
+                canActivate: [AuthGuard],
+                loadChildren:'./users/users.module#UsersModule'
             }, {
                 path: 'components',
                 canActivate: [AuthGuard],
@@ -50,16 +56,11 @@ export const AppRoutes: Routes = [
                 path: 'calendar',
                 canActivate: [AuthGuard],
                 loadChildren: './calendar/calendar.module#CalendarModule'
-            }, {
-                path: '',
-                canActivate: [AuthGuard],
-                loadChildren: './userpage/user.module#UserModule'
-            }, {
-                path: '',
-                canActivate: [AuthGuard],
-                loadChildren: './timeline/timeline.module#TimelineModule'
             }
         ]
+    }, {
+        path: '**',
+        component: PageNotFoundComponent
     }
 ];
 
