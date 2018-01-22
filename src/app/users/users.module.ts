@@ -6,6 +6,7 @@ import { MdModule } from '../md/md.module';
 import { MaterialModule } from '../app.module';
 
 import { UsersComponent } from './list/users.component';
+import { UserDetailComponent } from './details/userdetails.component';
 import { UsersRoutes } from './users.routing';
 
 @NgModule({
@@ -16,7 +17,10 @@ import { UsersRoutes } from './users.routing';
         MdModule,
         MaterialModule
     ],
-    declarations: [UsersComponent]
+    declarations: [
+        UsersComponent,
+        UserDetailComponent
+    ]
 })
 
 export class UsersModule {}

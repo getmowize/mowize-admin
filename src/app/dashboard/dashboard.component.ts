@@ -3,6 +3,8 @@ import { TableData } from '../md/md-table/md-table.component';
 import { LegendItem, ChartType } from '../md/md-chart/md-chart.component';
 
 import * as Chartist from 'chartist';
+import { MowizeService } from '../services/mowize.service';
+import { GraphData } from '../model/graphdata';
 
 declare const $: any;
 
@@ -14,6 +16,9 @@ declare const $: any;
 export class DashboardComponent implements OnInit, AfterViewInit {
 
     public tableData: TableData;
+    public graphData: GraphData;
+
+    constructor(private mowizeService: MowizeService) { }
 
     startAnimationForLineChart(chart: any) {
         let seq: any, delays: any, durations: any;
@@ -72,52 +77,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }
     // constructor(private navbarTitleService: NavbarTitleService) { }
     public ngOnInit() {
+        this.getGraphData();
+        this.setUserAnalysis();
+        this.setPlatformAnalysis();
 
-        /* ----------==========     Active Users Chart initialization For Documentation    ==========---------- */
-        const activeUsersChartData: any = {
-            labels: ['Active', 'Dropped', 'Inactive', 'HalfActive'],
-            series: [
-                [2530, 0, 0, 236]
-            ]
-        };
-        const optionsActiveUsersChart: any = {
-            axisY: {
-                showGrid: true
-            },
-            axisX: {
-                showGrid: true
-            },
-            horizontalBars: true,
-            chartPadding: { top: 10, right: 0, bottom: 0, left: 40 },
-        };
-
-        var activeUsersCharts = new Chartist.Bar('#activeUsers', activeUsersChartData, optionsActiveUsersChart);
-        this.startAnimationForLineChart(activeUsersCharts);
-
-
-        /* ----------==========     Platform Wise Users Chart initialization    ==========---------- */
-
-        const dataPlatformUsers = {
-            labels: ['Android', 'iOS', 'Web', 'Others'],
-            series: [
-                [2247, 210, 3, 70]
-
-            ]
-        };
-        const optionsPlatformUsers = {
-            axisY: {
-                showGrid: true
-            },
-            axisX: {
-                showGrid: true
-            },
-            horizontalBars: true,
-            chartPadding: { top: 10, right: 0, bottom: 0, left: 30 },
-        };
-
-        var platformSubscriptionChart = new Chartist.Bar('#platformWiseChart', dataPlatformUsers, optionsPlatformUsers);
-        this.startAnimationForBarChart(platformSubscriptionChart);
     }
+
     ngAfterViewInit() {
         const breakCards = true;
         if (breakCards === true) {
@@ -146,5 +111,67 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 });
             });
         }
+    }
+
+    setUserAnalysis() {
+        if (this.graphData) {
+            /* ----------==========     Active Users Chart initialization For Documentation    ==========---------- */
+            const activeUsersChartData: any = {
+                labels: ['Active', 'Dropped', 'Inactive', 'HalfActive'],
+                series: [
+                    [this.graphData.activeUser, this.graphData.dropUser, this.graphData.inactiveUser, this.graphData.halfActiveUser]
+                ]
+            };
+            const optionsActiveUsersChart: any = {
+                axisY: {
+                    showGrid: true
+                },
+                axisX: {
+                    showGrid: true
+                },
+                horizontalBars: true,
+                chartPadding: { top: 10, right: 0, bottom: 0, left: 40 },
+            };
+
+            var activeUsersCharts = new Chartist.Bar('#activeUsers', activeUsersChartData, optionsActiveUsersChart);
+            this.startAnimationForLineChart(activeUsersCharts);
+        }
+    }
+
+    setPlatformAnalysis() {
+
+        if (this.graphData) {
+            /* ----------==========     Platform Wise Users Chart initialization    ==========---------- */
+            const dataPlatformUsers = {
+                labels: ['Android', 'iOS', 'Web', 'Others'],
+                series: [
+                    [this.graphData.androidUser, this.graphData.iosUser, this.graphData.webUser, this.graphData.nonDeviceCount]
+
+                ]
+            };
+            const optionsPlatformUsers = {
+                axisY: {
+                    showGrid: true
+                },
+                axisX: {
+                    showGrid: true
+                },
+                horizontalBars: true,
+                chartPadding: { top: 10, right: 0, bottom: 0, left: 30 },
+            };
+
+            var platformSubscriptionChart = new Chartist.Bar('#platformWiseChart', dataPlatformUsers, optionsPlatformUsers);
+            this.startAnimationForBarChart(platformSubscriptionChart);
+        }
+    }
+
+    getGraphData(): void {
+        this.mowizeService.getGraphData()
+            .then(graphData => {
+                console.log(graphData);
+                this.graphData = graphData;
+                this.setUserAnalysis();
+                this.setPlatformAnalysis();
+            });
     }
 }

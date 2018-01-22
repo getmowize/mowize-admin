@@ -1,4 +1,14 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Angular2Csv } from 'angular2-csv/Angular2-csv';
+import { DataService } from 'app/services/data.service';
+import swal from 'sweetalert2';
+
+import { User } from '../../model/user';
+import { MowizeService } from '../../services/mowize.service';
+import { Router } from '@angular/router';
+import { INVALID } from '@angular/forms/src/model';
+import { isDate } from 'util';
 
 declare interface DataTable {
     headerRow: string[];
@@ -16,92 +26,258 @@ declare const $: any;
 export class UsersComponent implements OnInit, AfterViewInit {
 
     public dataTable: DataTable;
+    users: User[] = [];
+    tableData: string[][] = [];
 
-    constructor() { }
+    constructor(private mowizeService: MowizeService,
+        private dataService: DataService,
+        private router: Router,
+        public datepipe: DatePipe
+    ) { }
 
     ngOnInit() {
         this.dataTable = {
-            headerRow: ['Name', 'Position', 'Office', 'Age', 'Date', 'Actions'],
-            footerRow: ['Name', 'Position', 'Office', 'Age', 'Start Date', 'Actions'],
-
-            dataRows: [
-                ['Airi Satou', 'Andrew Mike', 'Develop', '2013', '99,225', ''],
-                ['Angelica Ramos', 'John Doe', 'Design', '2012', '89,241', 'btn-round'],
-                ['Ashton Cox', 'Alex Mike', 'Design', '2010', '92,144', 'btn-simple'],
-                ['Bradley Greer', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Brenden Wagner', 'Paul Dickens', 'Communication', '2015', '69,201', ''],
-                ['Brielle Williamson', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Caesar Vance', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Cedric Kelly', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Charde Marshall', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Colleen Hurst', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Dai Rios', 'Andrew Mike', 'Develop', '2013', '99,225', ''],
-                ['Doris Wilder', 'John Doe', 'Design', '2012', '89,241', 'btn-round'],
-                ['Fiona Green', 'Alex Mike', 'Design', '2010', '92,144', 'btn-simple'],
-                ['Garrett Winters', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Gavin Cortez', 'Paul Dickens', 'Communication', '2015', '69,201', ''],
-                ['Gavin Joyce', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Gloria Little', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Haley Kennedy', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Herrod Chandler', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Hope Fuentes', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Howard Hatfield', 'Andrew Mike', 'Develop', '2013', '99,225', ''],
-                ['Jena Gaines', 'John Doe', 'Design', '2012', '89,241', 'btn-round'],
-                ['Jenette Caldwell', 'Alex Mike', 'Design', '2010', '92,144', 'btn-simple'],
-                ['Jennifer Chang', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Martena Mccray', 'Paul Dickens', 'Communication', '2015', '69,201', ''],
-                ['Michael Silva', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Michelle House', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Paul Byrd', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Prescott Bartlett', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Quinn Flynn', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Rhona Davidson', 'Andrew Mike', 'Develop', '2013', '99,225', ''],
-                ['Shou Itou', 'John Doe', 'Design', '2012', '89,241', 'btn-round'],
-                ['Sonya Frost', 'Alex Mike', 'Design', '2010', '92,144', 'btn-simple'],
-                ['Suki Burks', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Tatyana Fitzpatrick', 'Paul Dickens', 'Communication', '2015', '69,201', ''],
-                ['Tiger Nixon', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Timothy Mooney', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Unity Butler', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Vivian Harrell', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round'],
-                ['Yuri Berry', 'Mike Monday', 'Marketing', '2013', '49,990', 'btn-round']
-            ]
+            headerRow: ['#', 'Id', 'Name', 'Email', 'Channel', 'D1', 'DA', 'YOB', 'Reg Date', 'Plan', 'Actions'],
+            footerRow: ['#', 'Id', 'Name', 'Email', 'Channel', 'D1', 'DA', 'YOB', 'Reg Date', 'Plan', 'Actions'],
+            dataRows: []
         };
 
+        this.mowizeService.getListOfUsers()
+            .then(result => {
+                console.log(result);
+                this.users = result;
+
+                const table = $('#usersTable').DataTable();
+                table.destroy();
+
+                var tableData: string[][] = [];
+
+                this.users.forEach(user => {
+
+                    var row: string[] = [];
+
+                    row.push((this.users.indexOf(user) + 1) + '');
+                    row.push(user.id + '');
+                    row.push(user.name);
+                    row.push(user.email);
+                    row.push(user.agentCode);
+                    row.push(user.assetCount + '');
+                    row.push(user.accountCount + '');
+                    var year;
+                    if (user.dob.toString() === 'Invalid Date') {
+                        year = '---';
+                    } else {
+                        year = this.datepipe.transform(user.dob, 'yyyy');
+                    }
+                    row.push(year);
+                    row.push(this.datepipe.transform(user.createdOn, 'dd MMM yyyy'));
+                    row.push(user.plan);
+                    row.push(user.status + '');
+
+                    tableData.push(row);
+                    this.dataTable.dataRows.push(row);
+                });
+
+                $('#datatables').DataTable({
+                    'pagingType': 'full_numbers',
+                    'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, 'All']],
+                    responsive: true,
+                    data: this.dataTable.dataRows,
+                    language: {
+                        search: '_INPUT_',
+                        searchPlaceholder: 'Search records',
+                    }
+                });
+
+                // Block a record
+                table.on('click', '.block', function (e: any) {
+                    const $tr = $(this).closest('tr');
+                    swal({
+                        title: 'Are you sure you want to block this user?',
+                        text: 'You may unblock him later, but his apps will stop working',
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes',
+                        cancelButtonText: 'No',
+                        confirmButtonClass: 'btn btn-success',
+                        cancelButtonClass: 'btn btn-danger',
+                        buttonsStyling: false
+                    }).then(function () {
+                        swal({
+                            title: 'Blocked!',
+                            text: 'This user has been blocked',
+                            type: 'success',
+                            confirmButtonClass: 'btn btn-success',
+                            buttonsStyling: false
+                        });
+                        table.draw();
+                    }).catch(swal.noop);
+                });
+
+                //UnBlock record
+                table.on('click', '.unblock', function (e: any) {
+                    const $tr = $(this).closest('tr');
+                    swal({
+                        title: 'Do you want to unblock this user?',
+                        text: 'This will enable all his services',
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes',
+                        cancelButtonText: 'No',
+                        confirmButtonClass: 'btn btn-success',
+                        cancelButtonClass: 'btn btn-danger',
+                        buttonsStyling: false
+                    }).then(function () {
+                        swal({
+                            title: 'Unblocked!',
+                            text: 'This user has been unblocked',
+                            type: 'success',
+                            confirmButtonClass: 'btn btn-success',
+                            buttonsStyling: false
+                        });
+                        table.draw();
+                    }).catch(swal.noop);
+                });
+
+                // this.users.forEach(user => {
+
+                //     var row: string[] = [];
+
+                //     row.push((this.users.indexOf(user) + 1) + '');
+                //     row.push(user.id + '');
+                //     row.push(user.name);
+                //     row.push(user.email);
+                //     row.push(user.agentCode);
+                //     row.push(user.assetCount + '');
+                //     row.push(user.accountCount + '');
+
+                //     var year;
+                //     if (user.dob.toString() === 'Invalid Date') {
+                //         year = '---';
+                //     } else {
+                //         year = this.datepipe.transform(user.dob, 'yyyy');
+                //     }
+
+                //     row.push(year);
+                //     row.push(this.datepipe.transform(user.createdOn, 'dd MMM yyyy'));
+                //     row.push(user.plan);
+
+                //     var actions: string;
+                //     if (user.status === 1) {
+                //         actions = `<div class="text-right">
+                //                 <button class="btn btn-simple btn-info btn-icon view">
+                //                     <i class="material-icons">open_in_browser</i>
+                //                 </button>
+                //                 <button class="btn btn-simple btn-success btn-icon block">
+                //                     <i class="material-icons">account_circle</i>
+                //                 </button>
+                //             </div>`;
+                //     }
+                //     if (user.status === 2) {
+                //         console.log('Status 2');
+                //         actions = `<div class="text-right">
+                //                 <button class="btn btn-simple btn-info btn-icon view">
+                //                     <i class="material-icons">open_in_browser</i>
+                //                 </button>
+                //                 <button class="btn btn-simple btn-success btn-icon unblock">
+                //                     <i class="material-icons">account_circle</i>
+                //                 </button>
+                //             </div>`;
+                //     }
+                //     row.push(actions);
+                //     table.row.add(row).draw(false);
+
+                // });
+            });
     }
 
     ngAfterViewInit() {
-        $('#datatables').DataTable({
-            'pagingType': 'full_numbers',
-            'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, 'All']],
-            responsive: true,
-            language: {
-                search: '_INPUT_',
-                searchPlaceholder: 'Search records',
-            }
 
-        });
+        // $('#datatables').DataTable({
+        //     'pagingType': 'full_numbers',
+        //     'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, 'All']],
+        //     responsive: true,
+        //     language: {
+        //         search: '_INPUT_',
+        //         searchPlaceholder: 'Search records',
+        //     }
 
-        const table = $('#datatables').DataTable();
+        // });
 
-        // Edit record
-        table.on('click', '.edit', function () {
-            const $tr = $(this).closest('tr');
+        // const table = $('#usersTable').DataTable();
 
-            const data = table.row($tr).data();
-            alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
-        });
+        // // // Block a record
+        // // table.on('click', '.view', function (e: any) {
+        // //     const $tr = this.closest('tr');
+        // //     const data = table.row($tr).data();
+        // //     console.log(data);
+        // //     // this.openUser(data);
+        // // });
 
-        // Delete a record
-        table.on('click', '.remove', function (e: any) {
-            const $tr = $(this).closest('tr');
-            table.row($tr).remove().draw();
-            e.preventDefault();
-        });
 
-        // Like record
-        table.on('click', '.like', function () {
-            alert('You clicked on Like button');
-        });
+        // // Block a record
+        // table.on('click', '.block', function (e: any) {
+        //     const $tr = $(this).closest('tr');
+        //     swal({
+        //         title: 'Are you sure you want to block this user?',
+        //         text: 'You may unblock him later, but his apps will stop working',
+        //         type: 'warning',
+        //         showCancelButton: true,
+        //         confirmButtonText: 'Yes',
+        //         cancelButtonText: 'No',
+        //         confirmButtonClass: 'btn btn-success',
+        //         cancelButtonClass: 'btn btn-danger',
+        //         buttonsStyling: false
+        //     }).then(function () {
+        //         swal({
+        //             title: 'Blocked!',
+        //             text: 'This user has been blocked',
+        //             type: 'success',
+        //             confirmButtonClass: 'btn btn-success',
+        //             buttonsStyling: false
+        //         });
+        //         table.draw();
+        //     }).catch(swal.noop);
+        // });
+
+        // //UnBlock record
+        // table.on('click', '.unblock', function (e: any) {
+        //     const $tr = $(this).closest('tr');
+        //     swal({
+        //         title: 'Do you want to unblock this user?',
+        //         text: 'This will enable all his services',
+        //         type: 'warning',
+        //         showCancelButton: true,
+        //         confirmButtonText: 'Yes',
+        //         cancelButtonText: 'No',
+        //         confirmButtonClass: 'btn btn-success',
+        //         cancelButtonClass: 'btn btn-danger',
+        //         buttonsStyling: false
+        //     }).then(function () {
+        //         swal({
+        //             title: 'Unblocked!',
+        //             text: 'This user has been unblocked',
+        //             type: 'success',
+        //             confirmButtonClass: 'btn btn-success',
+        //             buttonsStyling: false
+        //         });
+        //         table.draw();
+        //     }).catch(swal.noop);
+        // });
+
+    }
+
+    exportToExcel() {
+        // console.log(this.dataTable);
+        new Angular2Csv(this.dataTable.dataRows, 'UsersList');
+    }
+
+    openUser(data: string[]) {
+        console.log('Data' + data);
+        var position: number = +data[0];
+
+        const user: User = this.users[position];
+        this.dataService.setUser(user);
+        this.router.navigate(['/users/details']);
     }
 }

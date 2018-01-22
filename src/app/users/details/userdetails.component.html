@@ -1,0 +1,102 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div *ngIf="user" class="row">
+            <div class="col-md-6">
+                <div class="card card-profile">
+                    <div class="card-avatar">
+                        <a href="#pablo">
+                            <img class="img" src="../../assets/img/faces/marc.jpg" />
+                        </a>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">{{user.name}}</h4>
+                        <p class="description">
+                            This user registered on {{user.createdOn | date:'dd MMM yyyy'}}
+                        </p>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Full Name</label>
+                                    <input type="text" class="form-control" value="{{user.name}}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Email</label>
+                                    <input type="text" class="form-control" value="{{user.email}}" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div *ngIf="user.dob" class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">DOB</label>
+                                    <input type="text" class="form-control" value="{{user.dob | date:'dd MMM yyyy'}}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Gender</label>
+                                    <input type="text" class="form-control" value="{{getGender(user.gender)}}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Phone</label>
+                                    <input type="text" class="form-control" value="{{user.phone}}" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Profession</label>
+                                    <input type="text" class="form-control" value="{{getProfession(user.professionId)}}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Salary</label>
+                                    <input type="text" class="form-control" value="{{getSalary(user.salaryBracket)}}" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <h4>Last Seen On - {{getDeviceId(user.deviceId)}}</h4>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-12">
+                    <div class="card card-plain">
+                        <div class="card-content">
+                            <ul class="timeline">
+                                <li *ngFor="let timeline of user.listOfTimeline" [class]="timeline.cssClass">
+                                    <div class="timeline-badge info">
+                                        <i class="material-icons">card_travel</i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <span class="label label-danger">{{timeline.title}}</span>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>Category: {{timeline.categoryName}}</p>
+                                            <p>Log: {{timeline.timelinelog}}</p>
+                                        </div>
+                                        <h6>
+                                            <i class="ti-time"></i> Created on {{timeline.createdOn | date: 'dd MMM yyyy'}}
+                                        </h6>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

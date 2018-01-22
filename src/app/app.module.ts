@@ -1,7 +1,8 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -35,6 +36,7 @@ import {
   MatToolbarModule,
   MatTooltipModule,
 } from '@angular/material';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 
@@ -48,10 +50,12 @@ import { CanDeactivateGuard } from './services/deactivateauthguard.service';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './services/authguard.service';
 import { AuthService } from './services/authservice.service';
+import { MowizeService } from './services/mowize.service';
 import { FooterModule } from './shared/footer/footer.module';
 import { NavbarModule } from './shared/navbar/navbar.module';
 import { SidebarModule } from './sidebar/sidebar.module';
 import { FieldErrorDisplayComponent } from './forms/validationforms/field-error-display/field-error-display.component';
+import { DataService } from './services/data.service';
 
 @NgModule({
   exports: [
@@ -116,8 +120,11 @@ export class MaterialModule { }
   providers: [
     AuthGuard,
     AuthService,
+    MowizeService,
+    DataService,
     CanDeactivateGuard,
-    CookieService
+    CookieService,
+    DatePipe
   ]
 })
 export class AppModule { }

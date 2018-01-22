@@ -5,29 +5,40 @@ import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './services/authguard.service';
 import { PageNotFoundComponent } from './pagenotfound/pagenotfound.component';
-import { UsersModule } from 'app/users/users.module';
 
 export const AppRoutes: Routes = [
     {
-        path: 'login',
-        component: LoginComponent
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
     },
     {
-        path: '',
-        redirectTo: 'login',
-        pathMatch: 'full',
+        path: 'login',
+        component: LoginComponent
     }, {
         path: '',
         component: AdminLayoutComponent,
         children: [
             {
-                path: '',
+                path: 'dashboard',
                 canActivate: [AuthGuard],
                 loadChildren: './dashboard/dashboard.module#DashboardModule'
             }, {
                 path: 'users',
                 canActivate: [AuthGuard],
-                loadChildren:'./users/users.module#UsersModule'
+                loadChildren: './users/users.module#UsersModule'
+            }, {
+                path: 'channelpartners',
+                canActivate: [AuthGuard],
+                loadChildren: './channelpartners/channelpartner.module#ChannelPartnerModule'
+            }, {
+                path: 'emails',
+                canActivate: [AuthGuard],
+                loadChildren: './emailer/emailer.module#EmailerModule'
+            }, {
+                path: 'data',
+                canActivate: [AuthGuard],
+                loadChildren: './data/data.module#DataModule'
             }, {
                 path: 'components',
                 canActivate: [AuthGuard],

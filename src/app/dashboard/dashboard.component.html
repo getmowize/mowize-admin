@@ -76,15 +76,32 @@
                     </div>
                     <div class="card-content">
                         <div class="card-actions">
-                            <button type="button" class="btn btn-info btn-simple" matTooltip="Refresh" [matTooltipPosition]="'below'">
+                            <button type="button" class="btn btn-info btn-simple" (click)="getGraphData()">
                                 <i class="material-icons">refresh</i>
                             </button>
                         </div>
                         <h4 class="title">Users Analysis</h4>
-                        <p class="category">Active Users: <b>2350</b></p>
-                        <p class="category">Dropped Users: <b>50</b></p>
-                        <p class="category">Inactive Users: <b>50</b></p>
-                        <p class="category">Half Active Users: <b>70</b></p>
+                        <div *ngIf="graphData; else elseBlock">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="category">Active Users: <b>{{graphData.activeUser}}</b></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="category">Dropped Users: <b>{{graphData.dropUser}}</b></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="category">Inactive Users: <b>{{graphData.inactiveUser}}</b></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="category">Half Active Users: <b>{{graphData.halfActiveUser}}</b></p>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-template #elseBlock>
+                            <h3>No Data</h3>
+                        </ng-template>
                     </div>
 
                     <div class="card-footer">
@@ -102,15 +119,33 @@
                     </div>
                     <div class="card-content">
                         <div class="card-actions">
-                            <button type="button" class="btn btn-info btn-simple" matTooltip="Refresh" [matTooltipPosition]="'below'">
+                            <button type="button" class="btn btn-info btn-simple" (click)="getGraphData()">
                                 <i class="material-icons">refresh</i>
                             </button>
                         </div>
                         <h4 class="title">Users Platform-wise</h4>
-                        <p class="category">Android Users: <b>2350</b></p>
-                        <p class="category">iOS Users: <b>50</b></p>
-                        <p class="category">Web Users: <b>3</b></p>
-                        <p class="category">Others: <b>70</b></p>
+                        <div *ngIf="graphData; else elseBlock">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="category">Android Users: <b>{{graphData.androidUser}}</b></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="category">iOS Users: <b>{{graphData.iosUser}}</b></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="category">Web Users: <b>{{graphData.webUser}}</b></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="category">Others: <b>{{graphData.nonDeviceCount}}</b></p>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-template #elseBlock>
+                            <h3>No Data</h3>
+                        </ng-template>
+
                     </div>
 
                     <div class="card-footer">
@@ -378,7 +413,7 @@
                             </tbody>
                         </table>
                         <div style="float:right;">
-                            <button class=" btn btn-warning ">View All</button>
+                            <button class="btn btn-warning" [routerLink]="'/channelpartners'">View All</button>
                         </div>
                     </div>
                 </div>

@@ -19,13 +19,15 @@ export class AuthService {
     // store the URL so we can redirect after logging in
     redirectUrl: string;
 
-    login(): Observable<boolean> {
+    login(adminId: string): Observable<boolean> {
         this.cookieService.set(this.loginCookie, 'true', 0.01, '', '');
+        localStorage.setItem('adminId', adminId);
         return Observable.of(this.isLoggedIn());
     }
 
     logout(): void {
         this.cookieService.delete(this.loginCookie);
+        localStorage.removeItem('adminId');
         this.router.navigate(['/login']);
     }
 
@@ -35,5 +37,9 @@ export class AuthService {
 
     updateCookieTime(): void {
         this.cookieService.set(this.loginCookie, 'true', 0.01, '', '');
+    }
+
+    getAdminId(): string {
+        return localStorage.getItem('adminId');
     }
 }

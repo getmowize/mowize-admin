@@ -37,7 +37,7 @@ export const ROUTES: RouteInfo[] = [
         icontype: 'person'
     },
     {
-        path: '#',
+        path: '/channelpartners',
         title: 'Channel Partners',
         type: 'link',
         icontype: 'supervisor_account'
@@ -57,20 +57,20 @@ export const ROUTES: RouteInfo[] = [
         ]
     },
     {
-        path: '#',
+        path: '/data',
         title: 'Data Management',
         type: 'sub',
         icontype: 'file_upload',
         collapse: 'data_management',
         children: [
-            { path: '#', title: 'Stocks', ab: 'S' },
-            { path: '#', title: 'Mutual Funds', ab: 'MF' },
-            { path: '#', title: 'Dividend', ab: 'D' },
-            { path: '#', title: 'Face Value', ab: 'FV' }
+            { path: 'stocks', title: 'Stocks', ab: 'S' },
+            { path: 'mutualfunds', title: 'Mutual Funds', ab: 'MF' },
+            { path: 'dividend', title: 'Dividend', ab: 'D' },
+            { path: 'facevalue', title: 'Face Value', ab: 'FV' }
         ]
     },
     {
-        path: '#',
+        path: '/emails',
         title: 'Emailer',
         type: 'link',
         icontype: 'email'
@@ -80,17 +80,6 @@ export const ROUTES: RouteInfo[] = [
         title: 'FinFacts',
         type: 'link',
         icontype: 'information'
-    }, {
-        path: '/tables',
-        title: 'Tables',
-        type: 'sub',
-        icontype: 'grid_on',
-        collapse: 'tables',
-        children: [
-            { path: 'regular', title: 'Regular Tables', ab: 'RT' },
-            { path: 'extended', title: 'Extended Tables', ab: 'ET' },
-            { path: 'datatables.net', title: 'Datatables.net', ab: 'DT' }
-        ]
     }
 ];
 
@@ -224,4 +213,51 @@ export class SidebarComponent implements OnInit {
         }).catch(swal.noop);
     }
 
+    changePassword(): void {
+        swal({
+            title: 'Change Password',
+            html: `
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group label-floating">
+                        <label class="control-label">New Password</label>
+                        <input id="newpassword" type="password" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group label-floating">
+                        <label class="control-label">Confirm Password</label>
+                        <input id="confirmpassword" type="password" class="form-control">
+                    </div>
+                </div>
+            </div>`,
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false
+        }).then(function (result) {
+            var newpass = $('#newpassword').val();
+            var confirmpass = $('#confirmpassword').val();
+            console.log(newpass);
+            console.log(confirmpass);
+
+            if (newpass === confirmpass) {
+                swal({
+                    type: 'success',
+                    html: '<strong>Password Updated</strong>',
+                    confirmButtonClass: 'btn btn-success',
+                    buttonsStyling: false
+                });
+
+            } else {
+                swal({
+                    type: 'error',
+                    text: 'Your passwords does not match',
+                    confirmButtonClass: 'btn btn-success',
+                    buttonsStyling: false
+                });
+            }
+
+        }).catch(swal.noop);
+    }
 }

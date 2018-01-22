@@ -10,6 +10,6 @@ export class PageNotFoundComponent implements OnInit{
     constructor() { }
 
     public ngOnInit(): void {
-        throw new Error('Not implemented yet.');
+
     }
 }
