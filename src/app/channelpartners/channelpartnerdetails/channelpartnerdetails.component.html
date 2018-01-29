@@ -1,0 +1,211 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row" *ngIf="channelPartner">
+            <div class="col-md-12">
+                <div class="card card-profile">
+                    <div class="card-avatar">
+                        <a href="#pablo">
+                            <img class="img" src="../../assets/img/faces/marc.jpg" />
+                        </a>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">{{channelPartner.name}}</h4>
+                        <p class="description">
+                            This channel partner registered on {{channelPartner.createdOn | date:'dd MMM yyyy'}}
+                        </p>
+
+                        <button *ngIf="!inEditMode" type="submit" class="btn btn-warning btn-simple btn-wd btn-lg" (click)="setEditMode()">
+                            <i class="material-icons">edit</i>Edit
+                        </button>
+
+                        <div class="row text-left">
+                            <div class="col-md-6">
+                                <h4><b>Personal Details</b></h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Name</label>
+                                            <input type="text" class="form-control" value="{{channelPartner.name}}" [disabled]="!inEditMode">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Agent Id</label>
+                                            <input type="text" class="form-control" value="{{channelPartner.agent_id}}" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Phone</label>
+                                            <input type="text" class="form-control" value="{{channelPartner.phone}}" [disabled]="!inEditMode">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Address</label>
+                                            <input type="text" class="form-control" value="{{channelPartner.address}}" [disabled]="!inEditMode">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Email</label>
+                                            <input type="text" class="form-control" value="{{channelPartner.email}}" [disabled]="!inEditMode">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <h4><b>Bank Details</b></h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Bank Name</label>
+                                            <input type="text" class="form-control" value="{{channelPartner.bankName}}" [disabled]="!inEditMode">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Account Number</label>
+                                            <input type="text" class="form-control" value="{{channelPartner.accountNumber}}" [disabled]="!inEditMode">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">IFSC Code</label>
+                                            <input type="text" class="form-control" value="{{channelPartner.ifscCode}}" [disabled]="!inEditMode">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Branch Address</label>
+                                            <input type="text" class="form-control" value="{{channelPartner.branchAddress}}" [disabled]="!inEditMode">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="row text-left">
+                            <div class="col-md-12">
+                                <h4><b>Promocode Details</b></h4>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Annual Promocode Id</label>
+                                            <input type="text" class="form-control" value="{{channelPartner.annualPromoCode}}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Annual Promocode Applied</label>
+                                            <input type="text" class="form-control" value="{{channelPartner.annualUsers}}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Five year Promocode</label>
+                                            <input type="text" class="form-control" value="{{channelPartner.termPromoCode}}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Five year Promocode Applied</label>
+                                            <input type="text" class="form-control" value="{{channelPartner.termUsers}}" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="row text-left">
+                            <div class="col-md-12">
+                                <h4><b>Sub Agents Count</b></h4>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Layer 1</label>
+                                            <input type="text" class="form-control" value="{{channelPartner.layer1}}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Layer 2</label>
+                                            <input type="text" class="form-control" value="{{channelPartner.layer2}}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Layer 3</label>
+                                            <input type="text" class="form-control" value="{{channelPartner.layer3}}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Layer 4</label>
+                                            <input type="text" class="form-control" value="{{channelPartner.layer4}}" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row text-left">
+                            <div class="col-md-12">
+                                <h4><b>KYC Documents</b></h4>
+                                <div class="row">
+                                    <div *ngFor="let doc of channelPartner.listOfDocuments" class="col-md-2">
+                                        <div class="fileinput">
+                                            <div class="fileinput-new thumbnail">
+                                                <img src="../../assets/img/image_placeholder.jpg" alt="...">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="inEditMode" class="col-md-2">
+                                        <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                            <div class="fileinput-new thumbnail">
+                                                <img src="../../assets/img/image_placeholder.jpg" alt="...">
+                                            </div>
+                                            <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                                            <div>
+                                                <span class="btn btn-rose btn-round btn-file">
+                                                <span class="fileinput-new">Select image</span>
+                                                <span class="fileinput-exists">Change</span>
+                                                <input type="file" name="..." />
+                                                </span>
+                                                <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button *ngIf="inEditMode" type="submit" class="btn btn-warning btn-simple btn-wd btn-lg" (click)="setViewMode()">
+                                    Save
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

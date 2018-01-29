@@ -16,6 +16,7 @@ import { DataRoutes } from './data.routing';
         CommonModule,
         RouterModule.forChild(DataRoutes),
         FormsModule,
+        ReactiveFormsModule,
         MdModule,
         MaterialModule
     ],

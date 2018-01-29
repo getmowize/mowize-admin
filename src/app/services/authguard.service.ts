@@ -17,8 +17,17 @@ export class AuthGuard implements CanActivate {
     }
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         const url: string = state.url;
-
-        return this.checkLogin(url);
+        if (this.checkLogin(url)) {
+            if (this.checkLock(url)) {
+                console.log('Lock State');
+                this.router.navigate(['/lock']);
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
     }
 
     canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -28,6 +37,12 @@ export class AuthGuard implements CanActivate {
     canLoad(route: Route): boolean {
         let url = `/${route.path}`;
         return this.checkLogin(url);
+    }
+
+    checkLock(url: string): boolean {
+        if (this.authService.isLocked()) {
+            return true;
+        }
     }
 
     checkLogin(url: string): boolean {

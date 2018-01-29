@@ -6,24 +6,28 @@ import { ChannelPartner } from '../model/channelpartner';
 @Injectable()
 export class DataService {
 
-    private user: User;
-    private channelPartner: ChannelPartner;
-
-    setUser(currentUser: User) {
-        localStorage.setItem('user', currentUser.id + '');
+    setUser(userId: string) {
+        localStorage.setItem('user', userId);
         // this.user = currentUser;
     }
 
     getUser(): string {
         return localStorage.getItem('user');
-        // return this.user;
     }
 
-    setChannelPartner(channelPartner: ChannelPartner){
-        this.channelPartner = channelPartner;
+    removeUser() {
+        localStorage.removeItem('user');
     }
 
-    getChannelPartner(): ChannelPartner{
-        return this.channelPartner;
+    setChannelPartner(cpId: string) {
+        localStorage.setItem('cpId', cpId);
+    }
+
+    getChannelPartner(): string {
+        return localStorage.getItem('cpId');
+    }
+
+    removeChannelPartner() {
+        localStorage.removeItem('cpId');
     }
 }

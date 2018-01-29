@@ -7,6 +7,7 @@ import { MaterialModule } from '../app.module';
 
 import { ChannelPartnersListComponent } from './channelpartnerlist/channelpartnerslist.component';
 import { ChannelPartnerRoutes } from './channelpartner.routing';
+import { ChannelPartnerDetailsComponent } from 'app/channelpartners/channelpartnerdetails/channelpartnerdetails.component';
 
 @NgModule({
     imports: [
@@ -17,7 +18,8 @@ import { ChannelPartnerRoutes } from './channelpartner.routing';
         MaterialModule
     ],
     declarations: [
-        ChannelPartnersListComponent
+        ChannelPartnersListComponent,
+        ChannelPartnerDetailsComponent
     ]
 })
 

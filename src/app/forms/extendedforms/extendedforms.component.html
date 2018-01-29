@@ -9,14 +9,9 @@
                         <mat-datepicker-toggle matSuffix [for]="resultPicker">
                         </mat-datepicker-toggle>
                         <mat-input-container>
-                            <input matInput
-                                [matDatepicker]="resultPicker"
-                                placeholder="Pick a day">
+                            <input matInput [matDatepicker]="resultPicker" placeholder="Pick a day">
                         </mat-input-container>
-                        <mat-datepicker
-                            #resultPicker
-                            [touchUi]="touch"
-                            [startView]="'month'">
+                        <mat-datepicker #resultPicker [touchUi]="touch" [startView]="'month'">
                         </mat-datepicker>
                     </div>
                     <div class="col-md-6">
@@ -24,13 +19,9 @@
                         <mat-datepicker-toggle matSuffix [for]="datepickerYear">
                         </mat-datepicker-toggle>
                         <mat-input-container>
-                          <input matInput
-                                 [matDatepicker]="datepickerYear"
-                                 placeholder="Pick a year">
+                            <input matInput [matDatepicker]="datepickerYear" placeholder="Pick a year">
                         </mat-input-container>
-                        <mat-datepicker
-                            #datepickerYear
-                            [startView]="'year'">
+                        <mat-datepicker #datepickerYear [startView]="'year'">
                         </mat-datepicker>
                     </div>
                 </div>
@@ -55,20 +46,20 @@
 
                         <div class="row">
                             <div class="col-lg-5 col-md-8 col-sm-4">
-                              <mat-form-field>
-                                  <mat-select multiple placeholder="Multiple Cities" [(ngModel)]="currentCity" name="Paris" ariaLabel="cities[0]">
-                                      <mat-option *ngFor="let city of cities" [value]="city.value">
-                                          {{ city.viewValue }}
-                                      </mat-option>
-                                  </mat-select>
-                              </mat-form-field>
+                                <mat-form-field>
+                                    <mat-select multiple placeholder="Multiple Cities" [(ngModel)]="currentCity" name="Paris" ariaLabel="cities[0]">
+                                        <mat-option *ngFor="let city of cities" [value]="city.value">
+                                            {{ city.viewValue }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
                             </div>
                             <div class="col-lg-5 col-md-8 col-sm-4">
                                 <mat-form-field>
                                     <mat-select placeholder="Single City" name="city">
-                                      <mat-option *ngFor="let city of cities" [value]="city.value">
-                                        {{ city.viewValue }}
-                                      </mat-option>
+                                        <mat-option *ngFor="let city of cities" [value]="city.value">
+                                            {{ city.viewValue }}
+                                        </mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
@@ -80,7 +71,8 @@
                 <div class="row">
                     <div class="col-md-6">
                         <legend>Tags</legend>
-                        Regular: <tag-input [(ngModel)]='regularItems' theme='filled-theme'></tag-input>
+                        Regular:
+                        <tag-input [(ngModel)]='regularItems' theme='filled-theme'></tag-input>
                     </div>
                     <div class="col-md-6">
                         <legend>Dropdown & Dropup</legend>
@@ -187,8 +179,8 @@
                             <div>
                                 <span class="btn btn-rose btn-round btn-file">
                                     <span class="fileinput-new">Select image</span>
-                                    <span class="fileinput-exists">Change</span>
-                                    <input type="file" name="..." />
+                                <span class="fileinput-exists">Change</span>
+                                <input type="file" name="..." />
                                 </span>
                                 <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                             </div>
@@ -204,8 +196,8 @@
                             <div>
                                 <span class="btn btn-round btn-rose btn-file">
                                     <span class="fileinput-new">Add Photo</span>
-                                    <span class="fileinput-exists">Change</span>
-                                    <input type="file" name="..." />
+                                <span class="fileinput-exists">Change</span>
+                                <input type="file" name="..." />
                                 </span>
                                 <br />
                                 <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>

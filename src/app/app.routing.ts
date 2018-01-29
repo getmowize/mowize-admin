@@ -5,6 +5,7 @@ import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './services/authguard.service';
 import { PageNotFoundComponent } from './pagenotfound/pagenotfound.component';
+import { LockComponent } from 'app/lock/lock.component';
 
 export const AppRoutes: Routes = [
     {
@@ -15,6 +16,9 @@ export const AppRoutes: Routes = [
     {
         path: 'login',
         component: LoginComponent
+    }, {
+        path: 'lock',
+        component: LockComponent
     }, {
         path: '',
         component: AdminLayoutComponent,
@@ -40,33 +44,9 @@ export const AppRoutes: Routes = [
                 canActivate: [AuthGuard],
                 loadChildren: './data/data.module#DataModule'
             }, {
-                path: 'components',
+                path: 'masterdata',
                 canActivate: [AuthGuard],
-                loadChildren: './components/components.module#ComponentsModule'
-            }, {
-                path: 'forms',
-                canActivate: [AuthGuard],
-                loadChildren: './forms/forms.module#Forms'
-            }, {
-                path: 'tables',
-                canActivate: [AuthGuard],
-                loadChildren: './tables/tables.module#TablesModule'
-            }, {
-                path: 'maps',
-                canActivate: [AuthGuard],
-                loadChildren: './maps/maps.module#MapsModule'
-            }, {
-                path: 'widgets',
-                canActivate: [AuthGuard],
-                loadChildren: './widgets/widgets.module#WidgetsModule'
-            }, {
-                path: 'charts',
-                canActivate: [AuthGuard],
-                loadChildren: './charts/charts.module#ChartsModule'
-            }, {
-                path: 'calendar',
-                canActivate: [AuthGuard],
-                loadChildren: './calendar/calendar.module#CalendarModule'
+                loadChildren: './masterdata/masterdata.module#MasterDataModule'
             }
         ]
     }, {

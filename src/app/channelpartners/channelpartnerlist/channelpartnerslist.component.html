@@ -26,7 +26,8 @@
                                         <th>{{ dataTable.headerRow[7] }}</th>
                                         <th>{{ dataTable.headerRow[8] }}</th>
                                         <th>{{ dataTable.headerRow[9] }}</th>
-                                        <th class="disabled-sorting text-right">{{ dataTable.headerRow[10] }}</th>
+                                        <th>{{ dataTable.headerRow[10] }}</th>
+                                        <th class="disabled-sorting text-right">{{ dataTable.headerRow[11] }}</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -41,30 +42,35 @@
                                         <th>{{ dataTable.footerRow[7] }}</th>
                                         <th>{{ dataTable.footerRow[8] }}</th>
                                         <th>{{ dataTable.footerRow[9] }}</th>
-                                        <th class="text-right">{{ dataTable.footerRow[10] }}</th>
+                                        <th>{{ dataTable.footerRow[10] }}</th>
+                                        <th class="text-right">{{ dataTable.footerRow[11] }}</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <tr *ngFor="let row of dataTable.dataRows">
-                                        <td>{{row[0]}}</td>
                                         <td>{{row[1]}}</td>
                                         <td>{{row[2]}}</td>
                                         <td>{{row[3]}}</td>
-                                        <td>{{row[4]}}</td>
+                                        <td>{{row[4] | date:'dd MMM yyyy'}}</td>
                                         <td>{{row[5]}}</td>
                                         <td>{{row[6]}}</td>
-                                        <td>{{row[7] | date:'yyyy'}}</td>
-                                        <td>{{row[8] | date:'dd MMM yyyy'}}</td>
+                                        <td>{{row[7]}}</td>
+                                        <td>{{row[8]}}</td>
                                         <td>{{row[9]}}</td>
+                                        <td>{{row[10]}}</td>
+                                        <td>{{row[11]}}</td>
                                         <td class="text-right">
-                                            <button class="btn btn-simple btn-info btn-icon view" matTooltip="View" [matTooltipPosition]="'below'" (click)="openUser(row)">
+                                            <button class="btn btn-simple btn-info btn-icon view" matTooltip="View" [matTooltipPosition]="'below'" (click)="openPartner(row[0], row[1])">
                                                 <i class="material-icons">open_in_browser</i>
                                             </button>
-                                            <button class="btn btn-simple btn-success btn-icon block" matTooltip="Block" [matTooltipPosition]="'below'">
+                                            <button class="btn btn-simple btn-success btn-icon" matTooltip="Edit" [matTooltipPosition]="'below'" (click)="editPartner(row[0], row[1])">
                                                 <i class="material-icons">edit</i>
                                             </button>
-                                            <button class="btn btn-simple btn-danger btn-icon unblock" matTooltip="Unbock" [matTooltipPosition]="'below'">
+                                            <button class="btn btn-simple btn-danger btn-icon" matTooltip="Delete" [matTooltipPosition]="'below'" (click)="deletePartner(row[0], row[1], row[2])">
                                                 <i class="material-icons">delete</i>
+                                            </button>
+                                            <button class="btn btn-simple btn-info btn-icon" matTooltip="Resend Code" [matTooltipPosition]="'below'" (click)="sendPartnerCode(row[0], row[1])">
+                                                <i class="material-icons">send</i>
                                             </button>
                                         </td>
                                     </tr>

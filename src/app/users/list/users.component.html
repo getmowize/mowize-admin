@@ -9,7 +9,92 @@
                     <div class="card-content">
                         <h4 class="card-title">All Users</h4>
                         <div class="toolbar">
-                            Hello Filters
+                            <legend>Filters</legend>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-3">
+                                        <div class="row">
+                                            <mat-datepicker-toggle matSuffix [for]="fromPicker">
+                                            </mat-datepicker-toggle>
+                                            <mat-input-container>
+                                                <input matInput [matDatepicker]="fromPicker" [max]="toDate" [(ngModel)]="fromDate" placeholder="From Date" disabled>
+                                            </mat-input-container>
+                                            <mat-datepicker #fromPicker [touchUi]="touch" disabled="false">
+                                            </mat-datepicker>
+                                        </div>
+                                        <div class="row">
+                                            <mat-datepicker-toggle matSuffix [for]="toPicker">
+                                            </mat-datepicker-toggle>
+                                            <mat-input-container>
+                                                <input matInput [matDatepicker]="toPicker" [min]="fromDate" [max]="maxDate" [(ngModel)]="toDate" placeholder="To Date" disabled>
+                                            </mat-input-container>
+                                            <mat-datepicker #toPicker [touchUi]="touch" disabled="false">
+                                            </mat-datepicker>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="row">
+                                            <mat-form-field>
+                                                <mat-select placeholder="Platform" name="platform" [(value)]="platform">
+                                                    <mat-option value="">
+                                                        All Users
+                                                    </mat-option>
+                                                    <mat-option value="1">
+                                                        Android Users
+                                                    </mat-option>
+                                                    <mat-option value="2">
+                                                        iOS Users
+                                                    </mat-option>
+                                                    <mat-option value="3">
+                                                        Web Users
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="row">
+                                            <mat-form-field>
+                                                <mat-select placeholder="Gender" name="gender" [(value)]="gender">
+                                                    <mat-option value="">
+                                                        All
+                                                    </mat-option>
+                                                    <mat-option value="M">
+                                                        Male
+                                                    </mat-option>
+                                                    <mat-option value="F">
+                                                        Female
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="row">
+                                            <mat-form-field>
+                                                <mat-select placeholder="Status" name="status" [(value)]="status">
+                                                    <mat-option value="">
+                                                        All Users
+                                                    </mat-option>
+                                                    <mat-option value="0">
+                                                        Drop Out
+                                                    </mat-option>
+                                                    <mat-option value="1">
+                                                        Active
+                                                    </mat-option>
+                                                    <mat-option value="2">
+                                                        Blocked
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+
+                                    </div>
+                                    <div class="col=md-3">
+                                        <button class="btn btn-warning" (click)="searchWithDates()">Search</button>
+                                        <button class="btn btn-warning" (click)="exportToExcel()">Export To Excel</button>
+                                    </div>
+                                </div>
+                            </div>
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                         </div>
                         <div class="material-datatables table-responsive">
@@ -57,13 +142,13 @@
                                         <td>{{row[8]}}</td>
                                         <td>{{row[9]}}</td>
                                         <td class="text-right">
-                                            <button class="btn btn-simple btn-info btn-icon view" matTooltip="View" [matTooltipPosition]="'below'" (click)="openUser(row)">
+                                            <button class="btn btn-simple btn-info btn-icon view" matTooltip="View" [matTooltipPosition]="'below'" (click)="openUser(row[1])">
                                                 <i class="material-icons">open_in_browser</i>
                                             </button>
-                                            <button *ngIf="row[10] == 1" class="btn btn-simple btn-success btn-icon block" matTooltip="Block" [matTooltipPosition]="'below'">
+                                            <button *ngIf="row[10] == 1" class="btn btn-simple btn-success btn-icon" matTooltip="Block" [matTooltipPosition]="'below'" (click)="blockUser(row[1], row[0], row[2])">
                                                 <i class="material-icons">account_circle</i>
                                             </button>
-                                            <button *ngIf="row[10] == 2" class="btn btn-simple btn-danger btn-icon unblock" matTooltip="Unbock" [matTooltipPosition]="'below'">
+                                            <button *ngIf="row[10] == 2" class="btn btn-simple btn-danger btn-icon" matTooltip="Unbock" [matTooltipPosition]="'below'" (click)="unblockUser(row[1], row[0], row[2])">
                                                 <i class="material-icons">account_circle</i>
                                             </button>
                                         </td>

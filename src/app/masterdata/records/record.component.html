@@ -1,0 +1,74 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">assignment</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">Record Management</h4>
+                        <div class="toolbar">
+                            <legend>Filters</legend>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <mat-datepicker-toggle matSuffix [for]="fromPicker">
+                                        </mat-datepicker-toggle>
+                                        <mat-input-container>
+                                            <input matInput [matDatepicker]="fromPicker" [max]="toDate" [(ngModel)]="fromDate" placeholder="From Date" disabled>
+                                        </mat-input-container>
+                                        <mat-datepicker #fromPicker [touchUi]="touch" disabled="false">
+                                        </mat-datepicker>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <mat-datepicker-toggle matSuffix [for]="toPicker">
+                                        </mat-datepicker-toggle>
+                                        <mat-input-container>
+                                            <input matInput [matDatepicker]="toPicker" [min]="fromDate" [max]="maxDate" [(ngModel)]="toDate" placeholder="To Date" disabled>
+                                        </mat-input-container>
+                                        <mat-datepicker #toPicker [touchUi]="touch" disabled="false">
+                                        </mat-datepicker>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button class="btn btn-warning" (click)="searchWithDates()">Search</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!--        Here you can write extra buttons/actions for the toolbar              -->
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th class="text-right">Record Count</th>
+                                        <th class="text-right">Record Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of categoryList">
+                                        <td>{{data.categoryName}}</td>
+                                        <td class="text-right">{{data.totalCount}}</td>
+                                        <td class="text-right">{{data.totalValue | currency:'INR':true}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1"></td>
+                                        <td class="td-total">
+                                            Total
+                                        </td>
+                                        <td class="td-price">
+                                            {{totalValue | currency:'INR':true}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

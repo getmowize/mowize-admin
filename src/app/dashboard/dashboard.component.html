@@ -8,11 +8,11 @@
                     </div>
                     <div class="card-content">
                         <p class="category">Total Insurances</p>
-                        <h3 class="title">Rs 34,245</h3>
+                        <h3 class="title">{{insuranceData.totalValue | currency:"INR":true}}</h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
-                            Total count : 39
+                            Total count : {{insuranceData.totalCount}}
                         </div>
                     </div>
                 </div>
@@ -24,11 +24,11 @@
                     </div>
                     <div class="card-content">
                         <p class="category">Total Investments</p>
-                        <h3 class="title">Rs 34,245</h3>
+                        <h3 class="title">{{investmentsData.totalValue | currency:'INR':true}}</h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
-                            Total count : 39
+                            Total count : {{investmentsData.totalCount}}
                         </div>
                     </div>
                 </div>
@@ -40,11 +40,11 @@
                     </div>
                     <div class="card-content">
                         <p class="category">Total Accounts</p>
-                        <h3 class="title">Rs 4,500</h3>
+                        <h3 class="title">{{accountsData.totalValue | currency:'INR':true}}</h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
-                            Total count : 39
+                            Total count : {{accountsData.totalCount}}
                         </div>
                     </div>
                 </div>
@@ -57,11 +57,11 @@
                     </div>
                     <div class="card-content">
                         <p class="category">Total Liabilities</p>
-                        <h3 class="title">Rs 450</h3>
+                        <h3 class="title">{{liabilitiesData.totalValue | currency:'INR':true}}</h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
-                            Total count : 39
+                            Total count : {{liabilitiesData.totalCount}}
                         </div>
                     </div>
                 </div>
@@ -196,6 +196,7 @@
 
                     <div class="card-content">
                         <div class="tab-content">
+
                             <div class="tab-pane active" id="insurances">
                                 <table class="table table-hover">
                                     <thead class="text-warning">
@@ -206,34 +207,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Vehicle</td>
-                                            <td>39</td>
-                                            <td>1,37,25,911</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Term</td>
-                                            <td>39</td>
-                                            <td>1,37,25,911</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Health</td>
-                                            <td>39</td>
-                                            <td>1,37,25,911</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Property</td>
-                                            <td>39</td>
-                                            <td>1,37,25,911</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Others</td>
-                                            <td>39</td>
-                                            <td>1,37,25,911</td>
+                                        <tr *ngFor="let insurance of insuranceList">
+                                            <td style="width:auto;">{{insurance.categoryName}}</td>
+                                            <td>{{insurance.totalCount}}</td>
+                                            <td>{{insurance.totalValue | currency:'INR':true}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+
                             <div class="tab-pane" id="investments">
                                 <table class="table table-hover">
                                     <thead class="text-warning">
@@ -244,34 +226,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Real Estate</td>
-                                            <td>39</td>
-                                            <td>1,37,25,911</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Fixed Income Assets</td>
-                                            <td>39</td>
-                                            <td>1,37,25,911</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Listed Stocks</td>
-                                            <td>39</td>
-                                            <td>1,37,25,911</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Unlisted Stocks</td>
-                                            <td>39</td>
-                                            <td>1,37,25,911</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mutual Funds</td>
-                                            <td>39</td>
-                                            <td>1,37,25,911</td>
+                                        <tr *ngFor="let investment of investmentList">
+                                            <td style="width:auto;">{{investment.categoryName}}</td>
+                                            <td>{{investment.totalCount}}</td>
+                                            <td>{{investment.totalValue | currency:'INR':true}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+
                             <div class="tab-pane" id="accounts">
                                 <table class="table table-hover">
                                     <thead class="text-warning">
@@ -282,35 +245,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Credit Card</td>
-                                            <td>39</td>
-                                            <td>1,37,25,911</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Gift Card</td>
-                                            <td>39</td>
-                                            <td>1,37,25,911</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Loyalty Card</td>
-                                            <td>39</td>
-                                            <td>1,37,25,911</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Wallet</td>
-                                            <td>39</td>
-                                            <td>1,37,25,911</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Accounts</td>
-                                            <td>39</td>
-                                            <td>1,37,25,911</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Health Card</td>
-                                            <td>39</td>
-                                            <td>1,37,25,911</td>
+                                        <tr *ngFor="let account of accountList">
+                                            <td style="width:auto;">{{account.categoryName}}</td>
+                                            <td>{{account.totalCount}}</td>
+                                            <td>{{account.totalValue | currency:'INR':true}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -325,35 +263,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Car Loan</td>
-                                            <td>39</td>
-                                            <td>1,37,25,911</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Home Loan</td>
-                                            <td>39</td>
-                                            <td>1,37,25,911</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Personal Loan</td>
-                                            <td>39</td>
-                                            <td>1,37,25,911</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Education Loan</td>
-                                            <td>39</td>
-                                            <td>1,37,25,911</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Other Loan</td>
-                                            <td>39</td>
-                                            <td>1,37,25,911</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Under Construction Loan</td>
-                                            <td>39</td>
-                                            <td>1,37,25,911</td>
+                                        <tr *ngFor="let liability of liabilityList">
+                                            <td style="width:auto;">{{liability.categoryName}}</td>
+                                            <td>{{liability.totalCount}}</td>
+                                            <td>{{liability.totalValue | currency:'INR':true}}</td>
                                         </tr>
                                     </tbody>
                                 </table>

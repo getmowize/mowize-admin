@@ -29,11 +29,22 @@ export class UsersComponent implements OnInit, AfterViewInit {
     users: User[] = [];
     tableData: string[][] = [];
 
+    fromDate: Date;
+    toDate: Date;
+
+    maxDate = new Date();
+
+    platform: string = '';
+    status: string = '';
+    gender: string = '';
+
     constructor(private mowizeService: MowizeService,
         private dataService: DataService,
         private router: Router,
         public datepipe: DatePipe
-    ) { }
+    ) {
+        this.dataService.removeUser();
+    }
 
     ngOnInit() {
         this.dataTable = {
@@ -42,20 +53,16 @@ export class UsersComponent implements OnInit, AfterViewInit {
             dataRows: []
         };
 
-        this.mowizeService.getListOfUsers()
+        this.getUsersFromServer('', '', '', '', '');
+    }
+
+    getUsersFromServer(fromDate: string, toDate: string, selectedPlatform: string, selectedGender: string, selectedStatus: string): void {
+        this.mowizeService.getListOfUsers(fromDate, toDate, selectedPlatform, selectedGender, selectedStatus)
             .then(result => {
-                console.log(result);
                 this.users = result;
-
-                const table = $('#usersTable').DataTable();
-                table.destroy();
-
-                var tableData: string[][] = [];
-
+                this.dataTable.dataRows = [];
                 this.users.forEach(user => {
-
                     var row: string[] = [];
-
                     row.push((this.users.indexOf(user) + 1) + '');
                     row.push(user.id + '');
                     row.push(user.name);
@@ -63,6 +70,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
                     row.push(user.agentCode);
                     row.push(user.assetCount + '');
                     row.push(user.accountCount + '');
+
                     var year;
                     if (user.dob.toString() === 'Invalid Date') {
                         year = '---';
@@ -74,210 +82,146 @@ export class UsersComponent implements OnInit, AfterViewInit {
                     row.push(user.plan);
                     row.push(user.status + '');
 
-                    tableData.push(row);
                     this.dataTable.dataRows.push(row);
                 });
 
-                $('#datatables').DataTable({
-                    'pagingType': 'full_numbers',
-                    'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, 'All']],
-                    responsive: true,
-                    data: this.dataTable.dataRows,
-                    language: {
-                        search: '_INPUT_',
-                        searchPlaceholder: 'Search records',
-                    }
-                });
-
-                // Block a record
-                table.on('click', '.block', function (e: any) {
-                    const $tr = $(this).closest('tr');
-                    swal({
-                        title: 'Are you sure you want to block this user?',
-                        text: 'You may unblock him later, but his apps will stop working',
-                        type: 'warning',
-                        showCancelButton: true,
-                        confirmButtonText: 'Yes',
-                        cancelButtonText: 'No',
-                        confirmButtonClass: 'btn btn-success',
-                        cancelButtonClass: 'btn btn-danger',
-                        buttonsStyling: false
-                    }).then(function () {
-                        swal({
-                            title: 'Blocked!',
-                            text: 'This user has been blocked',
-                            type: 'success',
-                            confirmButtonClass: 'btn btn-success',
-                            buttonsStyling: false
-                        });
-                        table.draw();
-                    }).catch(swal.noop);
-                });
-
-                //UnBlock record
-                table.on('click', '.unblock', function (e: any) {
-                    const $tr = $(this).closest('tr');
-                    swal({
-                        title: 'Do you want to unblock this user?',
-                        text: 'This will enable all his services',
-                        type: 'warning',
-                        showCancelButton: true,
-                        confirmButtonText: 'Yes',
-                        cancelButtonText: 'No',
-                        confirmButtonClass: 'btn btn-success',
-                        cancelButtonClass: 'btn btn-danger',
-                        buttonsStyling: false
-                    }).then(function () {
-                        swal({
-                            title: 'Unblocked!',
-                            text: 'This user has been unblocked',
-                            type: 'success',
-                            confirmButtonClass: 'btn btn-success',
-                            buttonsStyling: false
-                        });
-                        table.draw();
-                    }).catch(swal.noop);
-                });
-
-                // this.users.forEach(user => {
-
-                //     var row: string[] = [];
-
-                //     row.push((this.users.indexOf(user) + 1) + '');
-                //     row.push(user.id + '');
-                //     row.push(user.name);
-                //     row.push(user.email);
-                //     row.push(user.agentCode);
-                //     row.push(user.assetCount + '');
-                //     row.push(user.accountCount + '');
-
-                //     var year;
-                //     if (user.dob.toString() === 'Invalid Date') {
-                //         year = '---';
-                //     } else {
-                //         year = this.datepipe.transform(user.dob, 'yyyy');
-                //     }
-
-                //     row.push(year);
-                //     row.push(this.datepipe.transform(user.createdOn, 'dd MMM yyyy'));
-                //     row.push(user.plan);
-
-                //     var actions: string;
-                //     if (user.status === 1) {
-                //         actions = `<div class="text-right">
-                //                 <button class="btn btn-simple btn-info btn-icon view">
-                //                     <i class="material-icons">open_in_browser</i>
-                //                 </button>
-                //                 <button class="btn btn-simple btn-success btn-icon block">
-                //                     <i class="material-icons">account_circle</i>
-                //                 </button>
-                //             </div>`;
-                //     }
-                //     if (user.status === 2) {
-                //         console.log('Status 2');
-                //         actions = `<div class="text-right">
-                //                 <button class="btn btn-simple btn-info btn-icon view">
-                //                     <i class="material-icons">open_in_browser</i>
-                //                 </button>
-                //                 <button class="btn btn-simple btn-success btn-icon unblock">
-                //                     <i class="material-icons">account_circle</i>
-                //                 </button>
-                //             </div>`;
-                //     }
-                //     row.push(actions);
-                //     table.row.add(row).draw(false);
-
-                // });
+                this.refreshTable();
             });
     }
 
+
     ngAfterViewInit() {
+    }
 
-        // $('#datatables').DataTable({
-        //     'pagingType': 'full_numbers',
-        //     'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, 'All']],
-        //     responsive: true,
-        //     language: {
-        //         search: '_INPUT_',
-        //         searchPlaceholder: 'Search records',
-        //     }
+    makeDataTable() {
+        $('#datatables').DataTable({
+            search: true,
+            sort: true,
+            'pagingType': 'full_numbers',
+            'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, 'All']],
+            responsive: true,
+            language: {
+                search: '_INPUT_',
+                searchPlaceholder: 'Search records',
+            }
+        });
 
-        // });
-
-        // const table = $('#usersTable').DataTable();
-
-        // // // Block a record
-        // // table.on('click', '.view', function (e: any) {
-        // //     const $tr = this.closest('tr');
-        // //     const data = table.row($tr).data();
-        // //     console.log(data);
-        // //     // this.openUser(data);
-        // // });
-
-
-        // // Block a record
-        // table.on('click', '.block', function (e: any) {
-        //     const $tr = $(this).closest('tr');
-        //     swal({
-        //         title: 'Are you sure you want to block this user?',
-        //         text: 'You may unblock him later, but his apps will stop working',
-        //         type: 'warning',
-        //         showCancelButton: true,
-        //         confirmButtonText: 'Yes',
-        //         cancelButtonText: 'No',
-        //         confirmButtonClass: 'btn btn-success',
-        //         cancelButtonClass: 'btn btn-danger',
-        //         buttonsStyling: false
-        //     }).then(function () {
-        //         swal({
-        //             title: 'Blocked!',
-        //             text: 'This user has been blocked',
-        //             type: 'success',
-        //             confirmButtonClass: 'btn btn-success',
-        //             buttonsStyling: false
-        //         });
-        //         table.draw();
-        //     }).catch(swal.noop);
-        // });
-
-        // //UnBlock record
-        // table.on('click', '.unblock', function (e: any) {
-        //     const $tr = $(this).closest('tr');
-        //     swal({
-        //         title: 'Do you want to unblock this user?',
-        //         text: 'This will enable all his services',
-        //         type: 'warning',
-        //         showCancelButton: true,
-        //         confirmButtonText: 'Yes',
-        //         cancelButtonText: 'No',
-        //         confirmButtonClass: 'btn btn-success',
-        //         cancelButtonClass: 'btn btn-danger',
-        //         buttonsStyling: false
-        //     }).then(function () {
-        //         swal({
-        //             title: 'Unblocked!',
-        //             text: 'This user has been unblocked',
-        //             type: 'success',
-        //             confirmButtonClass: 'btn btn-success',
-        //             buttonsStyling: false
-        //         });
-        //         table.draw();
-        //     }).catch(swal.noop);
-        // });
-
+        const table = $('#usersTable').DataTable();
     }
 
     exportToExcel() {
-        // console.log(this.dataTable);
         new Angular2Csv(this.dataTable.dataRows, 'UsersList');
     }
 
-    openUser(data: string[]) {
-        console.log('Data' + data);
-        var position: number = +data[0];
+    searchWithDates() {
+        var from = '';
+        if (this.fromDate === undefined) {
+            from = '';
+        } else {
+            from = this.datepipe.transform(this.fromDate, 'yyyy-MM-dd');
+        }
 
-        const user: User = this.users[position];
-        this.dataService.setUser(user);
+        var to = '';
+        if (this.toDate === undefined) {
+            to = '';
+        } else {
+            to = this.datepipe.transform(this.toDate, 'yyyy-MM-dd');
+        }
+
+        this.getUsersFromServer(from, to, this.platform, this.gender, this.status);
+    }
+
+    openUser(userId: string) {
+        this.dataService.setUser(userId);
         this.router.navigate(['/users/details']);
     }
+
+    blockUser(userId: string, position: number, userName: string) {
+        swal({
+            title: 'Are you sure you want to block ' + userName + ' ?',
+            text: 'You may unblock him later, but his apps will stop working',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false
+        }).then(() => {
+            this.mowizeService.blockOrUnblockUser(userId, '2')
+                .then(result => {
+                    if (result === true) {
+                        swal({
+                            title: 'Blocked!',
+                            text: userName + ' has been blocked',
+                            type: 'success',
+                            confirmButtonClass: 'btn btn-success',
+                            buttonsStyling: false
+                        }).catch(swal.noop);
+                        var row = this.dataTable.dataRows[position - 1];
+                        row[10] = '2';
+                        this.refreshTable();
+                    } else {
+                        swal({
+                            title: 'Unable to block user!',
+                            text: userName + ' was not blocked',
+                            type: 'error',
+                            confirmButtonClass: 'btn btn-success',
+                            buttonsStyling: false
+                        }).catch(swal.noop);
+                    }
+                });
+        }).catch(swal.noop);
+
+    }
+
+    unblockUser(userId: string, position: number, userName: string) {
+        swal({
+            title: 'Do you want to unblock ' + userName + ' ?',
+            text: 'This will enable all his services',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false
+        }).then(() => {
+            this.mowizeService.blockOrUnblockUser(userId, '1')
+                .then(result => {
+                    if (result === true) {
+                        swal({
+                            title: 'Unblocked!',
+                            text: userName + ' has been unblocked',
+                            type: 'success',
+                            confirmButtonClass: 'btn btn-success',
+                            buttonsStyling: false
+                        }).catch(swal.noop);
+                        var row = this.dataTable.dataRows[position - 1];
+                        row[10] = '1';
+                        this.refreshTable();
+                    } else {
+                        swal({
+                            title: 'Unable to unblock user!',
+                            text: userName + ' was not unblocked',
+                            type: 'error',
+                            confirmButtonClass: 'btn btn-success',
+                            buttonsStyling: false
+                        }).catch(swal.noop);
+                    }
+                });
+        }).catch(swal.noop);
+
+    }
+
+    refreshTable() {
+        const table = $('#usersTable').DataTable();
+        table.destroy();
+
+        var self = this;
+        setTimeout(function () {
+            self.makeDataTable();
+        }, 10);
+    }
+
 }

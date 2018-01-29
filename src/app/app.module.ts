@@ -54,8 +54,10 @@ import { MowizeService } from './services/mowize.service';
 import { FooterModule } from './shared/footer/footer.module';
 import { NavbarModule } from './shared/navbar/navbar.module';
 import { SidebarModule } from './sidebar/sidebar.module';
-import { FieldErrorDisplayComponent } from './forms/validationforms/field-error-display/field-error-display.component';
+import { FieldErrorDisplayComponent } from './field-error-display/field-error-display.component';
 import { DataService } from './services/data.service';
+import { FieldErrorDisplayModule } from 'app/field-error-display/field-error-display.module';
+import { LockComponent } from 'app/lock/lock.component';
 
 @NgModule({
   exports: [
@@ -106,15 +108,16 @@ export class MaterialModule { }
     MatNativeDateModule,
     SidebarModule,
     NavbarModule,
-    FooterModule
+    FooterModule,
+    FieldErrorDisplayModule
   ],
   declarations: [
     AppComponent,
     LoginComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
-    FieldErrorDisplayComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    LockComponent
   ],
   bootstrap: [AppComponent],
   providers: [

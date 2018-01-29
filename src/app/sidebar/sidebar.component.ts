@@ -43,17 +43,17 @@ export const ROUTES: RouteInfo[] = [
         icontype: 'supervisor_account'
     },
     {
-        path: '#',
+        path: '/masterdata',
         title: 'Master Data',
         type: 'sub',
         icontype: 'content_paste',
         collapse: 'master_data',
         children: [
-            { path: '#', title: 'Category Management', ab: 'CM' },
-            { path: '#', title: 'Record Management', ab: 'RM' },
-            { path: '#', title: 'Timeline Management', ab: 'TM' },
+            { path: 'category', title: 'Category Management', ab: 'CM' },
+            { path: 'records', title: 'Record Management', ab: 'RM' },
+            { path: 'timeline', title: 'Timeline Management', ab: 'TM' },
             { path: '#', title: 'Company Management', ab: 'CM' },
-            { path: '#', title: 'Profession Management', ab: 'PM' }
+            { path: 'professions', title: 'Profession Management', ab: 'PM' }
         ]
     },
     {
@@ -217,7 +217,7 @@ export class SidebarComponent implements OnInit {
         swal({
             title: 'Change Password',
             html: `
-            <div class="row">
+            <div class="row" style="text-align:left;">
                 <div class="col-md-12">
                     <div class="form-group label-floating">
                         <label class="control-label">New Password</label>

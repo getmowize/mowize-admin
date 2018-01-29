@@ -8,14 +8,17 @@ import { MaterialModule } from '../app.module';
 import { UsersComponent } from './list/users.component';
 import { UserDetailComponent } from './details/userdetails.component';
 import { UsersRoutes } from './users.routing';
+import { FieldErrorDisplayModule } from 'app/field-error-display/field-error-display.module';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule.forChild(UsersRoutes),
         FormsModule,
+        ReactiveFormsModule,
         MdModule,
-        MaterialModule
+        MaterialModule,
+        FieldErrorDisplayModule
     ],
     declarations: [
         UsersComponent,

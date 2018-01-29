@@ -13,6 +13,7 @@ const redirectUrl: string = "login";
 export class AuthService {
 
     loginCookie = 'mowizeadmin';
+    lockCookie = 'lockdown';
 
     constructor(private cookieService: CookieService, private router: Router) { }
 
@@ -33,6 +34,19 @@ export class AuthService {
 
     isLoggedIn(): boolean {
         return this.cookieService.check(this.loginCookie);
+    }
+
+    isLocked(): boolean {
+        return this.cookieService.check(this.lockCookie);
+    }
+
+    lock(): Observable<boolean> {
+        this.cookieService.set(this.lockCookie, 'true');
+        return Observable.of(this.isLocked());
+    }
+
+    unlock() {
+        this.cookieService.delete(this.lockCookie);
     }
 
     updateCookieTime(): void {
