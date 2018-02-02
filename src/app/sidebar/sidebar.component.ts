@@ -52,7 +52,7 @@ export const ROUTES: RouteInfo[] = [
             { path: 'category', title: 'Category Management', ab: 'CM' },
             { path: 'records', title: 'Record Management', ab: 'RM' },
             { path: 'timeline', title: 'Timeline Management', ab: 'TM' },
-            { path: '#', title: 'Company Management', ab: 'CM' },
+            { path: 'company', title: 'Company Management', ab: 'CM' },
             { path: 'professions', title: 'Profession Management', ab: 'PM' }
         ]
     },

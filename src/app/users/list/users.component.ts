@@ -186,6 +186,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
             confirmButtonClass: 'btn btn-success',
             cancelButtonClass: 'btn btn-danger',
             buttonsStyling: false
+            
         }).then(() => {
             this.mowizeService.blockOrUnblockUser(userId, '1')
                 .then(result => {

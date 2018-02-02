@@ -2,6 +2,8 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+// Import Angular plugin.
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 
 import {
   MatAutocompleteModule,
@@ -109,7 +111,8 @@ export class MaterialModule { }
     SidebarModule,
     NavbarModule,
     FooterModule,
-    FieldErrorDisplayModule
+    FieldErrorDisplayModule,
+    FroalaEditorModule.forRoot(), FroalaViewModule.forRoot()
   ],
   declarations: [
     AppComponent,

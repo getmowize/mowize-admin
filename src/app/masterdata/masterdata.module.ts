@@ -10,6 +10,7 @@ import { RecordComponent } from './records/record.component';
 import { TimelineComponent } from './timeline/timeline.component';
 import { ProfessionComponent } from './professions/profession.component';
 import { CompanyComponent } from './company/company.component';
+import { CompanyDetailsComponent } from './company/companydetails.component';
 
 @NgModule({
     imports: [
@@ -24,7 +25,8 @@ import { CompanyComponent } from './company/company.component';
         RecordComponent,
         TimelineComponent,
         ProfessionComponent,
-        CompanyComponent
+        CompanyComponent,
+        CompanyDetailsComponent
     ]
 })
 

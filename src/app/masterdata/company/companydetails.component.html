@@ -1,0 +1,154 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="purple">
+                        <i class="material-icons">person</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">Profession Management</h4>
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Full Name</label>
+                                            <input type="text" class="form-control" [(ngModel)]="companyName">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <mat-form-field style="width: 100%;">
+                                            <mat-select placeholder="Company Type" [(ngModel)]="companyType">
+                                                <mat-option value="1">
+                                                    Company
+                                                </mat-option>
+                                                <mat-option value="2">
+                                                    Bank
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="row">
+                                        <mat-form-field style="width: 100%;">
+                                            <mat-select multiple placeholder="Categories Applicable" [(ngModel)]="selectedCompanies" name="Paris" ariaLabel="cities[0]">
+                                                <mat-option value="5">
+                                                    Vehicle Insurance
+                                                </mat-option>
+                                                <mat-option value="6">
+                                                    Term Insurance
+                                                </mat-option>
+                                                <mat-option value="7">
+                                                    Health Insurance
+                                                </mat-option>
+                                                <mat-option value="8">
+                                                    Property Insurance
+                                                </mat-option>
+                                                <mat-option value="9">
+                                                    Other Insurance
+                                                </mat-option>
+                                                <mat-option value="10">
+                                                    Credit Card
+                                                </mat-option>
+                                                <mat-option value="11">
+                                                    Gift Card
+                                                </mat-option>
+                                                <mat-option value="12">
+                                                    Loyalty Card
+                                                </mat-option>
+                                                <mat-option value="13">
+                                                    Health Card
+                                                </mat-option>
+                                                <mat-option value="14">
+                                                    Wallet
+                                                </mat-option>
+                                                <mat-option value="15">
+                                                    Account
+                                                </mat-option>
+                                                <mat-option value="17">
+                                                    Mutual Fund SIP
+                                                </mat-option>
+                                                <mat-option value="18">
+                                                    Mutual Fund
+                                                </mat-option>
+                                                <mat-option value="19">
+                                                    Listed Stock
+                                                </mat-option>
+                                                <mat-option value="20">
+                                                    Unlisted Stock
+                                                </mat-option>
+                                                <mat-option value="22">
+                                                    Jewellery
+                                                </mat-option>
+                                                <mat-option value="35">
+                                                    Self Occupied
+                                                </mat-option>
+                                                <mat-option value="36">
+                                                    Rent Generating
+                                                </mat-option>
+                                                <mat-option value="37">
+                                                    Under Construction Property
+                                                </mat-option>
+                                                <mat-option value="23">
+                                                    Home Loan
+                                                </mat-option>
+                                                <mat-option value="24">
+                                                    Car Loan
+                                                </mat-option>
+                                                <mat-option value="25">
+                                                    Education Loan
+                                                </mat-option>
+                                                <mat-option value="26">
+                                                    Property Loan
+                                                </mat-option>
+                                                <mat-option value="27">
+                                                    Security Loan
+                                                </mat-option>
+                                                <mat-option value="28">
+                                                    Other Loan
+                                                </mat-option>
+                                                <mat-option value="38">
+                                                    Under Construction Loan
+                                                </mat-option>
+                                                <mat-option value="39">
+                                                    Personal Loan
+                                                </mat-option>
+                                                <mat-option value="29">
+                                                    PPF
+                                                </mat-option>
+                                                <mat-option value="30">
+                                                    Money Back Policy
+                                                </mat-option>
+                                                <mat-option value="31">
+                                                    PF
+                                                </mat-option>
+                                                <mat-option value="32">
+                                                    Bonds
+                                                </mat-option>
+                                                <mat-option value="33">
+                                                    FD
+                                                </mat-option>
+                                                <mat-option value="34">
+                                                    RD
+                                                </mat-option>
+                                                <mat-option value="40">
+                                                    Other Investment
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="row">
+                                        <button class="btn btn-warning" (click)="save()">Save</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end content-->
+                </div>
+                <!--  end card  -->
+            </div>
+        </div>
+    </div>
+</div>

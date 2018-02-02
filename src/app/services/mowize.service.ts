@@ -12,6 +12,7 @@ import { CategoryData } from 'app/model/categoryData';
 import { ChannelPartnerDocument } from 'app/model/channelPartnerDocument';
 import { DocumentTimeline } from 'app/model/documentTimeline';
 import { Company } from 'app/model/company';
+import { Profession } from 'app/model/profession';
 
 const baseUrl = "http://medtecloud.com/";
 const serviceUrl = "Services";
@@ -25,6 +26,12 @@ export class MowizeService {
 
     private headers = new Headers({
         'Content-Type': 'application/json',
+        'Decode': '2',
+        'Gzip': '2'
+    });
+
+    private uploadHeaders = new Headers({
+        'Content-Type': 'multipart/form-data',
         'Decode': '2',
         'Gzip': '2'
     });
@@ -628,6 +635,172 @@ export class MowizeService {
 
         return promise;
 
+    }
+
+    uploadDividend(file: File): Promise<boolean> {
+
+        let formData: FormData = new FormData();
+        formData.append('file', file);
+
+        return this.http
+            .post(url, formData, { headers: this.uploadHeaders })
+            .toPromise()
+            .then(response => {
+                console.log(JSON.stringify(response.json()));
+                // const jsonData: JSON = response.json();
+                // if (jsonData['error_code'] === '400') {
+                //     const message = jsonData['error_desc'];
+                // };
+                return JSON.stringify(response.json()) as string;
+            })
+            .catch(this.handleError);
+
+        // const promise = new Promise<boolean>((resolve, reject) => {
+        //     const serverresponse: string = '{}';
+        //     const result = JSON.parse(serverresponse);
+        //     if (result['error_code'] === '400') {
+        //         resolve(false);
+        //     } else {
+        //         resolve(true);
+        //     }
+        // });
+        // return promise;
+    }
+
+    getCompanyDetails(id: number): Promise<string[]> {
+        const postData = {
+            'REQUEST_TYPE_SENT': 'SERVICE_GET_COMPANY_DETAIL',
+            'company_id': id + ''
+        };
+
+        const promise = new Promise<string[]>((resolve, reject) => {
+            const serverresponse: string = '{"company_detail":["6","30","19","33"]}';
+            const result = JSON.parse(serverresponse);
+            var ids = [];
+            if (result['error_code'] === '400') {
+                resolve(ids);
+            } else {
+                var resultArray: JSON[] = result['company_detail'];
+                resultArray.forEach(string => {
+                    ids.push(string);
+                });
+                resolve(ids);
+            }
+        });
+        return promise;
+    }
+
+    addCompany(id: number, name: string, type: number, categories: string[]): Promise<boolean> {
+
+        const postData = {
+            'REQUEST_TYPE_SENT': 'SERVICE_ADD_COMPANY',
+            'company_name': name,
+            'company_type': type + '',
+            'category_id_array': categories
+        };
+
+        console.log(postData);
+
+        const promise = new Promise<boolean>((resolve, reject) => {
+            const serverresponse: string = '{}';
+            const result = JSON.parse(serverresponse);
+            if (result['error_code'] === '400') {
+                resolve(false);
+            } else {
+                resolve(true);
+            }
+        });
+        return promise;
+    }
+
+    editCompany(id: number, name: string, type: number, categories: string[]): Promise<boolean> {
+        const postData = {
+            'REQUEST_TYPE_SENT': 'SERVICE_EDIT_COMPANY',
+            'company_id': id + '',
+            'company_name': name,
+            'company_type': type + '',
+            'category_id_array': categories
+        };
+        console.log(postData);
+
+        const promise = new Promise<boolean>((resolve, reject) => {
+            const serverresponse: string = '{}';
+            const result = JSON.parse(serverresponse);
+            if (result['error_code'] === '400') {
+                resolve(false);
+            } else {
+                resolve(true);
+            }
+        });
+        return promise;
+    }
+
+    getListOfProfessions(): Promise<Profession[]> {
+        const postData = {
+            'REQUEST_TYPE_SENT': 'SERVICE_PROFESSION_LIST'
+        };
+
+        const promise = new Promise<Profession[]>((resolve, reject) => {
+            const serverresponse: string = '{"profession_list_array":[{"id":"1","name":"Architect\r\n","description":"Architect\r\n","status":"1"},{"id":"2","name":"Business Consultant\r\n","description":"Business Consultant\r\n","status":"1"},{"id":"3","name":"Chairman/Owner/CEO/Partner","description":"Chairman/Owner/CEO/Partner","status":"1"},{"id":"4","name":"Creative Consultants\r\n","description":"Creative Consultants\r\n","status":"1"},{"id":"5","name":"Educator\r\n","description":"Educator\r\n","status":"1"},{"id":"6","name":"Engineer\r\n","description":"Engineer\r\n","status":"1"},{"id":"7","name":"Financial Analyst\r\n","description":"Financial Analyst\r\n","status":"1"},{"id":"8","name":"Human Resource","description":"Human Resource\r\n","status":"1"},{"id":"9","name":"IT Services\r\n","description":"IT Services\r\n","status":"1"},{"id":"10","name":"Legal Occupations\r\n","description":"Legal Occupations\r\n","status":"1"},{"id":"11","name":"Operations\r\n","description":"Operations\r\n","status":"1"},{"id":"12","name":"Purchase Management\r\n","description":"Purchase Management\r\n","status":"1"},{"id":"13","name":"Sales\r\n","description":"Sales\r\n","status":"1"},{"id":"14","name":"Social Services\r\n","description":"Social Services\r\n","status":"1"},{"id":"15","name":"Student \r\n","description":"Student \r\n","status":"1"},{"id":"16","name":"Other\r\n","description":"Other\r\n","status":"1"}]}';
+            const mystring = serverresponse.split('\r\n').join('');
+            const result = JSON.parse(mystring);
+            var professionList: Profession[] = [];
+            if (result['error_code'] === '400') {
+                resolve(professionList);
+            } else {
+                var array: JSON[] = result['profession_list_array'];
+                array.forEach(prof => {
+                    var profession: Profession = new Profession();
+                    profession.id = +prof['id'];
+                    profession.name = prof['name'];
+                    profession.status = +prof['status'];
+                    profession.description = prof['description'];
+
+                    professionList.push(profession);
+                });
+                resolve(professionList);
+            }
+        });
+        return promise;
+    }
+
+    editProfession(name: string, description: string, id: string): Promise<boolean> {
+        const postData = {
+            'REQUEST_TYPE_SENT': 'SERVICE_EDIT_PROFESSION',
+            'name': name,
+            'description': description,
+            'id': id
+        };
+
+        const promise = new Promise<boolean>((resolve, reject) => {
+            const serverresponse: string = '{}';
+            const result = JSON.parse(serverresponse);
+            if (result['error_code'] === '400') {
+                resolve(false);
+            } else {
+                resolve(true);
+            }
+        });
+        return promise;
+    }
+
+    addProfession(name: string, description: string): Promise<boolean> {
+        const postData = {
+            'REQUEST_TYPE_SENT': 'SERVICE_ADD_PROFESSION',
+            'name': name,
+            'description': description
+        };
+
+        const promise = new Promise<boolean>((resolve, reject) => {
+            const serverresponse: string = '{}';
+            const result = JSON.parse(serverresponse);
+            if (result['error_code'] === '400') {
+                resolve(false);
+            } else {
+                resolve(true);
+            }
+        });
+        return promise;
     }
 
 

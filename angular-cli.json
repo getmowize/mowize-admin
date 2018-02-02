@@ -54,7 +54,8 @@
             "../node_modules/jvectormap/tests/assets/jquery-jvectormap-map.js",
             "../node_modules/jvectormap/tests/assets/jquery-jvectormap-world-mill-en.js",
             "../node_modules/sweetalert2/dist/sweetalert2.js",
-            "../node_modules/jquery-validation/dist/jquery.validate.min.js"
+            "../node_modules/jquery-validation/dist/jquery.validate.min.js",
+            "../node_modules/froala-editor/js/froala_editor.pkgd.min.js"
         ],
         "environmentSource": "environments/environment.ts",
         "environments": {

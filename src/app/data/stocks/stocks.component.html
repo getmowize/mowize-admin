@@ -1,6 +1,29 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
+            <div class="col-md-12">
+                <h4>Please select the latest file named <b>dlyprice.csv</b></h4>
+                <h5>Today's file will be in todays date folder named Mutual</h5>
+                <form [formGroup]="dataForm">
+                    <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                        <span class="btn btn-rose btn-round btn-file">
+                        <span class="fileinput-new">Select CSV File</span>
+                        <span class="fileinput-exists">Change CSV File</span>
+                        <input formControlName="csvData" id="csvData" type="file" name="..." accept=".csv" (change)="onFileChange($event)" />
+                        </span>
+                    </div>
+                    <md-error *ngIf="selectedFile != ''">
+                        <strong *ngIf="selectedFile != 'dlyprice.csv'">Wrong File Selected</strong>
+                        <strong>{{selectedFile}}</strong>
+                    </md-error>
+                    <md-error *ngIf="selectedFile === ''">
+                        <strong>Please select a file first</strong>
+                    </md-error>
+                    <div class="form-footer">
+                        <button type="submit" class="btn btn-rose btn-wd btn-lg" (click)="saveFile()">Save</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

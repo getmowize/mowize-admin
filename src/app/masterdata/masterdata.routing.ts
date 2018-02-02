@@ -4,6 +4,7 @@ import { RecordComponent } from './records/record.component';
 import { TimelineComponent } from './timeline/timeline.component';
 import { ProfessionComponent } from './professions/profession.component';
 import { CompanyComponent } from './company/company.component';
+import { CompanyDetailsComponent } from './company/companydetails.component';
 
 export const MasterDataRoutes: Routes = [
     {
@@ -25,6 +26,9 @@ export const MasterDataRoutes: Routes = [
             }, {
                 path: 'company',
                 component: CompanyComponent
+            }, {
+                path: 'companydetails',
+                component: CompanyDetailsComponent
             }
         ]
     }
