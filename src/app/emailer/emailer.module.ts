@@ -8,6 +8,7 @@ import { MaterialModule } from '../app.module';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { EmailsComponent } from './emails/emails.component';
 import { EmailsRoutes } from './emailer.routing';
+import { EmailDetailsComponent } from 'app/emailer/emaildetails/emaildetails.component';
 
 @NgModule({
     imports: [
@@ -19,7 +20,8 @@ import { EmailsRoutes } from './emailer.routing';
         FroalaEditorModule.forRoot(), FroalaViewModule.forRoot()
     ],
     declarations: [
-        EmailsComponent
+        EmailsComponent,
+        EmailDetailsComponent
     ]
 })
 export class EmailerModule {

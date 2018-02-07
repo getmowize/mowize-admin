@@ -13,6 +13,8 @@ import { ChannelPartnerDocument } from 'app/model/channelPartnerDocument';
 import { DocumentTimeline } from 'app/model/documentTimeline';
 import { Company } from 'app/model/company';
 import { Profession } from 'app/model/profession';
+import { EmailTemplate } from 'app/model/emailtemplate';
+import { resolve } from 'url';
 
 const baseUrl = "http://medtecloud.com/";
 const serviceUrl = "Services";
@@ -801,6 +803,39 @@ export class MowizeService {
             }
         });
         return promise;
+    }
+
+    getEmailTemplates(): Promise<EmailTemplate[]> {
+        const postData = {
+            'REQUEST_TYPE_SENT': 'SERVICE_EMAIL_TEMPLATE_LIST',
+        };
+
+        const promise = new Promise<EmailTemplate[]>((resolve, reject) => {
+            const serverresponse: string = '{"email_template_list_array":[{"id":"1","subject":"Registration","body":"\r\nThanks for joining mowize family.</p>\r\n\r\n\r\nYour OTP </strong> for registration is:</p>","template_type":"1","status":"1","admin_user_id":"1"},{"id":"2","subject":"Forgot Password","body":"\r\n\r\nYour one time password to login is:</p>","template_type":"2","status":"1","admin_user_id":"1"},{"id":"3","subject":"Invitation","body":"\r\n\r\nhas shared an asset on Mowize.To see this shared document, you will have to first register with us or Download App</a>.</p>","template_type":"3","status":"1","admin_user_id":"1"},{"id":"4","subject":"Enterprise","body":"\r\n\r\nThanks for showing interest in Mowize.Our executive will get in touch with you shortly.</p>","template_type":"4","status":"1","admin_user_id":"1"},{"id":"5","subject":"Plan Upgradtion","body":"\r\n\r\nYou have successfully Upgraded your plan.</p>\r\n\r\n\r\nYour licence code is :#licence_no </strong></p>\r\n\r\n\r\n </p>\r\n\r\n\r\n* This licence Code can be shared with one more user for upgration of plan.</em></p>","template_type":"5","status":"1","admin_user_id":"1"},{"id":"6","subject":"Invoice Mail","body":"\r\n\r\nHello!\r\nPlease find attached Rent Invoice for the month of #month</p>\r\n\r\n\r\nPdf Attachment</p>\r\n\r\n\r\n\r\nWarm Regards,\r\n#user_name</p>","template_type":"6","status":"1","admin_user_id":"1"},{"id":"7","subject":"Change Device","body":"\r\n\r\nYou have requested to change your device.</p>\r\n\r\n\r\nYour OTP </strong> for update device is:</p>","template_type":"7","status":"1","admin_user_id":"1"}]}';
+            const mystring = serverresponse.split('\r\n').join('');
+            const result = JSON.parse(mystring);
+            var emails: EmailTemplate[] = [];
+            if (result['error_code'] === '400') {
+                resolve(emails);
+            } else {
+                var array: JSON[] = result['email_template_list_array'];
+                array.forEach(template => {
+                    var emailtemplate: EmailTemplate = new EmailTemplate();
+                    emailtemplate.id = +template['id'];
+                    emailtemplate.subject = template['subject'];
+                    emailtemplate.body = template['body'];
+                    emailtemplate.templateType = +template['template_type'];
+                    emailtemplate.status = +template['status'];
+                    emailtemplate.adminStatusId = +template['admin_user_id'];
+
+                    emails.push(emailtemplate);
+                });
+                resolve(emails);
+            }
+        });
+
+        return promise;
+
     }
 
 

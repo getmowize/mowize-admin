@@ -1,0 +1,37 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="purple">
+                        <i class="material-icons">person</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">Edit Email</h4>
+
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Email Subject</label>
+                                    <input type="text" class="form-control" value="{{email.subject}}">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-12">
+                            <div [froalaEditor] [(froalaModel)]="email.body"></div>
+                        </div>
+                        <div class="col-md-12">
+                            <button class="btn btn-warning" (click)="exportToExcel()">Save Email</button>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>

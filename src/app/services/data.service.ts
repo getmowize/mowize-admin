@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { User } from 'app/model/user';
 import { ChannelPartner } from '../model/channelpartner';
 import { Company } from 'app/model/company';
+import { EmailTemplate } from 'app/model/emailtemplate';
 
 @Injectable()
 export class DataService {
@@ -58,6 +59,35 @@ export class DataService {
         company.type = +localStorage.getItem('companyType');
         company.name = localStorage.getItem('companyName');
         return company;
+    }
+
+    setEmailTemplate(email: EmailTemplate){
+        localStorage.setItem('emailId', email.id + '');
+        localStorage.setItem('adminStatusId', email.adminStatusId + '');
+        localStorage.setItem('subject', email.subject);
+        localStorage.setItem('status', email.status + '');
+        localStorage.setItem('templateType', email.templateType + '');
+        localStorage.setItem('body', email.body);
+    }
+
+    getEmailTemplate(): EmailTemplate {
+        var emailtemplate: EmailTemplate = new EmailTemplate();
+        emailtemplate.adminStatusId = +localStorage.getItem('adminStatusId');
+        emailtemplate.id = +localStorage.getItem('emailId');
+        emailtemplate.subject = localStorage.getItem('subject');
+        emailtemplate.status = +localStorage.getItem('status');
+        emailtemplate.templateType = +localStorage.getItem('templateType');
+        emailtemplate.body = localStorage.getItem('body');
+        return emailtemplate;
+    }
+
+    removeEmailTemplate() {
+        localStorage.removeItem('adminStatusId');
+        localStorage.removeItem('emailId');
+        localStorage.removeItem('subject');
+        localStorage.removeItem('status');
+        localStorage.removeItem('templateType');
+        localStorage.removeItem('body');
     }
 
 }
